@@ -3,38 +3,35 @@ using UnityEngine;
 [SelectionBase]
 public class Chunk : MonoBehaviour
 {
+    private int id;
     private GameObject location;
     private ChunkManager chunkManager;
 
     private Vector3 offset;
 
-    private bool firstChunk;
-
-    public void Init(bool _first = false)
+    public void Init(int _id, GameObject _location)
     {
-        if (location == null) return;
+        id = _id;
+        location = _location;
 
-        GameObject _location = Instantiate(location, position:transform.position, transform.rotation,parent:transform);
-        ChunkLocation chunkLocation = _location.GetComponent<ChunkLocation>();
+        GameObject _locationObject = Instantiate(_location, position:transform.position, transform.rotation,parent:transform);
+        ChunkLocation chunkLocation = _locationObject.GetComponent<ChunkLocation>();
+
         offset = chunkLocation.GetOffset();
     }
 
     public void setChunkManager(ChunkManager _manager) => chunkManager = _manager;
     public void setLocation(GameObject _location) => location = _location;
-
     public Vector3 GetOffset() => offset;
 
     void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
-        Debug.Log("Add generation next chunk");
         if (!chunkManager) return;
-        chunkManager.GenerateNextChunk(chunkManager.getLocation(0));
+        chunkManager.GenerateNextChunk(false,chunkManager.getLocation(0));
+        chunkManager.setPlayerChunk(id);
+        
         GetComponent<BoxCollider>().enabled = false;
-    }
-    void OnTriggerExit(Collider other)
-    {
-        if (!other.CompareTag("Player")) return;
         Debug.Log("Add unload last chunks");
     }
 }

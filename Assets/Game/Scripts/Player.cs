@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 5.0f;
     [SerializeField] private float jumpHeight = 25.0f;
-    [SerializeField] private float maxFallSpeed = 100.0f;
+    // [SerializeField] private float maxFallSpeed = 100.0f;
 
     [Header("Camera Settings")]
     [SerializeField] private float mouseSensitivity = 100.0f;
