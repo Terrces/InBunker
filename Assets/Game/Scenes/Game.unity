@@ -1993,7 +1993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   moveSpeed: 5
-  jumpHeight: 2
+  jumpHeight: 45
   mouseSensitivity: 20
   cameraTransform: {fileID: 1194695695}
 --- !u!1 &2027504404
