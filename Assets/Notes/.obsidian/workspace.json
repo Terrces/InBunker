@@ -15,9 +15,9 @@
               "state": {
                 "file": "3d игра на unity за неделю/Доска.canvas",
                 "viewState": {
-                  "x": 147.44633270522422,
-                  "y": 1187.807116545092,
-                  "zoom": 0
+                  "x": -60,
+                  "y": 1160,
+                  "zoom": -0.964940709038819
                 }
               },
               "icon": "lucide-layout-dashboard",
@@ -97,6 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "3d игра на unity за неделю/Доска.canvas",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -106,7 +107,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks"
+              "title": "Обратные ссылки для Доска"
             }
           },
           {
@@ -156,8 +157,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
