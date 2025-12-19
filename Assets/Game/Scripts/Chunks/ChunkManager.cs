@@ -44,7 +44,6 @@ public class ChunkManager : MonoBehaviour
         chunkComponent.Init(chunkID, _location);
         lastPosition += chunkComponent.GetOffset();
         if (chunkComponent.GetLocationRotating()) _chunk.transform.rotation = addChunkRotation(chunkComponent.GetRotationRadius());
-        // Debug.Log(lastPosition);
         _chunk.transform.position += lastPosition;
     }
     
@@ -55,7 +54,6 @@ public class ChunkManager : MonoBehaviour
             math.radians(lastRotation.y += _rotation.y), 
             math.radians(lastRotation.z += _rotation.z)
             );
-        Debug.Log(rotation);
         return rotation;
     }
 

@@ -15,7 +15,6 @@ public class Chunk : MonoBehaviour
     public void Init(int _id, GameObject _location)
     {
         id = _id;
-        // Debug.Log(id);
         location = _location;
 
         GameObject _locationObject = Instantiate(_location, position:transform.position, transform.rotation,parent:transform);
@@ -40,7 +39,5 @@ public class Chunk : MonoBehaviour
         chunkManager.setPlayerChunk(id);
 
         if (currentState == states.Generated) currentState = states.NextChunkGenerated;
-
-        // Debug.Log("Add unload last chunks");
     }
 }

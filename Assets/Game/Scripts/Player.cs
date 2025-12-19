@@ -116,15 +116,9 @@ public class Player : MonoBehaviour
         transform.Rotate(Vector3.up * stickX);
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
     }
-    private void OnEnable()
-    {
-        InputSystem.onActionChange += OnActionChange;
-    }
-
-    private void OnDisable()
-    {
-        InputSystem.onActionChange -= OnActionChange;
-    }
+    
+    private void OnEnable() => InputSystem.onActionChange += OnActionChange;
+    private void OnDisable() => InputSystem.onActionChange -= OnActionChange;
 
     private void OnActionChange(object obj, InputActionChange change)
     {
