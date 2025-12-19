@@ -1694,14 +1694,14 @@ Camera:
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
+  m_projectionMatrixMode: 2
   m_GateFitMode: 2
   m_FOVAxisMode: 0
-  m_Iso: 200
+  m_Iso: 269
   m_ShutterSpeed: 0.005
   m_Aperture: 16
   m_FocusDistance: 10
-  m_FocalLength: 50
+  m_FocalLength: 25.734083
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
@@ -1715,8 +1715,8 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
+  far clip plane: 100
+  field of view: 50
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -1772,11 +1772,11 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
+  m_RenderPostProcessing: 1
+  m_Antialiasing: 3
   m_AntialiasingQuality: 2
   m_StopNaN: 0
-  m_Dithering: 0
+  m_Dithering: 1
   m_ClearDepth: 1
   m_AllowXRRendering: 1
   m_AllowHDROutput: 1
@@ -1947,7 +1947,7 @@ Transform:
   m_GameObject: {fileID: 1901418165}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.87763, y: 1.141, z: -11}
+  m_LocalPosition: {x: 0.87763, y: 1.141, z: -8.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1992,9 +1992,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cbf5e2e90b48e141b63f5a4c5c4cad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  moveSpeed: 5
-  jumpHeight: 45
-  mouseSensitivity: 20
+  moveSpeed: 3
+  jumpHeight: 0
+  mouseSensitivity: 25
+  smoothTime: 0.05
   cameraTransform: {fileID: 1194695695}
 --- !u!1 &2027504404
 GameObject:
@@ -2042,8 +2043,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChunkManager
   chunk: {fileID: 3118698078082252254, guid: 54c1fed2acd1c9f4ea07f53c23660dc9, type: 3}
   locations:
-  - {fileID: 2049915204552866618, guid: 4aff9e35cebc9c843b3e68bc789e0e8d, type: 3}
-  firstChunkPostion: {x: 0, y: 1, z: 0}
+  - {fileID: 8401064113297321614, guid: 4aff9e35cebc9c843b3e68bc789e0e8d, type: 3}
+  firstChunkPostion: {x: 0, y: 2, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

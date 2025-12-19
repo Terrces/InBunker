@@ -35,6 +35,7 @@ public class ChunkManager : MonoBehaviour
         if (firstChunk) 
         {
             _chunk.transform.position = firstChunkPostion;
+            lastPosition = firstChunkPostion;
             chunkComponent.Init(0,_location);
             lastChunkID = 0;
             return;

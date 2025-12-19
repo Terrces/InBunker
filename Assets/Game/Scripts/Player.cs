@@ -11,12 +11,20 @@ public class Player : MonoBehaviour
     // [SerializeField] private float maxFallSpeed = 100.0f;
 
     [Header("Camera Settings")]
-    [SerializeField] private float mouseSensitivity = 100.0f;
+    [SerializeField] private bool gamepadMode = false;
+    [SerializeField] private float mouseSensitivity = 25.0f;
+    [SerializeField] private float gamepadSensitivity = 25.0f;
+    [SerializeField] float smoothTime = 0.05f;
+    [SerializeField] float gamepadSmoothTime = 0f;
     [SerializeField] private Transform cameraTransform;
 
+
+
     private CharacterController characterController; // Ссылка на компонент CharacterController
-    private Vector3 velocity; // Текущая вертикальная скорость (для гравитации/прыжка)
-    private float xRotation = 0f; // Текущий поворот камеры по оси X (вверх/вниз)
+    private Vector3 velocity;
+    private float xRotation = 0f;
+    private float xRotationVelocity;
+    private float yRotationVelocity;
 
     private InputAction moveAction;
     private InputAction jumpAction;
@@ -35,8 +43,11 @@ public class Player : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    private void FixedUpdate() => HandleMovement();
-    private void Update() => HandleCameraRotation();
+    private void Update()
+    { 
+        HandleCameraRotation();
+        HandleMovement();
+    }
 
     private void HandleMovement()
     {
@@ -59,13 +70,71 @@ public class Player : MonoBehaviour
 
     private void HandleCameraRotation()
     {
-        Vector2 mousePosition = lookAction.ReadValue<Vector2>();
+        Vector2 look = lookAction.ReadValue<Vector2>();
 
-        transform.Rotate(Vector3.up * (mousePosition.x * mouseSensitivity * Time.deltaTime));
+        if (gamepadMode) HandleGamepadCamera(look);
+        else HandleMouseCamera(look);
+    }
 
-        xRotation -= mousePosition.y * mouseSensitivity * Time.deltaTime;
+    private void HandleMouseCamera(Vector2 look)
+    {
+        float mouseX = look.x * mouseSensitivity * Time.deltaTime;
+        float mouseY = look.y * mouseSensitivity * Time.deltaTime;
+
+        float targetXRotation = xRotation - mouseY;
+        targetXRotation = Mathf.Clamp(targetXRotation, -90f, 90f);
+
+        float smoothYDelta = Mathf.SmoothDamp(
+            0f,
+            mouseX,
+            ref yRotationVelocity,
+            smoothTime
+        );
+
+        xRotation = Mathf.SmoothDamp(
+            xRotation,
+            targetXRotation,
+            ref xRotationVelocity,
+            smoothTime
+        );
+
+        transform.Rotate(Vector3.up * smoothYDelta);
+        cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+    }
+
+    private void HandleGamepadCamera(Vector2 look)
+    {
+        if (look.sqrMagnitude < 0.001f)
+            return;
+
+        float stickX = look.x * gamepadSensitivity * Time.deltaTime;
+        float stickY = look.y * gamepadSensitivity * Time.deltaTime;
+
+        xRotation -= stickY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
+        transform.Rotate(Vector3.up * stickX);
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+    }
+    private void OnEnable()
+    {
+        InputSystem.onActionChange += OnActionChange;
+    }
+
+    private void OnDisable()
+    {
+        InputSystem.onActionChange -= OnActionChange;
+    }
+
+    private void OnActionChange(object obj, InputActionChange change)
+    {
+        if (change != InputActionChange.ActionPerformed)
+            return;
+
+        var action = obj as InputAction;
+        if (action == null || action.activeControl == null)
+            return;
+
+        gamepadMode = action.activeControl.device is Gamepad;
     }
 }
