@@ -1,3 +1,7 @@
+// Simple 3D character controller for a Unity project.
+// Uses Unity's new Input System.
+// Work in progress, some features are not implemented yet.
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,19 +12,19 @@ public class Player : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 5.0f;
     [SerializeField] private float jumpHeight = 25.0f;
-    // [SerializeField] private float maxFallSpeed = 100.0f;
 
     [Header("Camera Settings")]
-    [SerializeField] private bool gamepadMode = false;
+    // mouse properties
     [SerializeField] private float mouseSensitivity = 25.0f;
+    [SerializeField] private float mouseSmoothTime = 0.05f;
+
+    // gamepad properties
+    [SerializeField] private bool gamepadMode = false;
     [SerializeField] private float gamepadSensitivity = 25.0f;
-    [SerializeField] float smoothTime = 0.05f;
-    [SerializeField] float gamepadSmoothTime = 0f;
+    [SerializeField] private float gamepadDeadZone = 0.001f;
     [SerializeField] private Transform cameraTransform;
 
-
-
-    private CharacterController characterController; // Ссылка на компонент CharacterController
+    private CharacterController characterController;
     private Vector3 velocity;
     private float xRotation = 0f;
     private float xRotationVelocity;
@@ -29,6 +33,7 @@ public class Player : MonoBehaviour
     private InputAction moveAction;
     private InputAction jumpAction;
     private InputAction lookAction;
+    // private InputAction interactAction;
 
     private void Start()
     {
@@ -39,6 +44,8 @@ public class Player : MonoBehaviour
         moveAction = InputSystem.actions.FindAction("Move");
         jumpAction = InputSystem.actions.FindAction("Jump");
         lookAction = InputSystem.actions.FindAction("Look");
+        // if you need interact:
+        // interactAction = InputSystem.actions.FindAction("Interact");
 
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -84,19 +91,8 @@ public class Player : MonoBehaviour
         float targetXRotation = xRotation - mouseY;
         targetXRotation = Mathf.Clamp(targetXRotation, -90f, 90f);
 
-        float smoothYDelta = Mathf.SmoothDamp(
-            0f,
-            mouseX,
-            ref yRotationVelocity,
-            smoothTime
-        );
-
-        xRotation = Mathf.SmoothDamp(
-            xRotation,
-            targetXRotation,
-            ref xRotationVelocity,
-            smoothTime
-        );
+        float smoothYDelta = Mathf.SmoothDamp(0f, mouseX, ref yRotationVelocity, mouseSmoothTime );
+        xRotation = Mathf.SmoothDamp(xRotation, targetXRotation, ref xRotationVelocity, mouseSmoothTime);
 
         transform.Rotate(Vector3.up * smoothYDelta);
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
@@ -104,8 +100,7 @@ public class Player : MonoBehaviour
 
     private void HandleGamepadCamera(Vector2 look)
     {
-        if (look.sqrMagnitude < 0.001f)
-            return;
+        if (look.sqrMagnitude < gamepadDeadZone) return;
 
         float stickX = look.x * gamepadSensitivity * Time.deltaTime;
         float stickY = look.y * gamepadSensitivity * Time.deltaTime;
@@ -116,18 +111,16 @@ public class Player : MonoBehaviour
         transform.Rotate(Vector3.up * stickX);
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
     }
-    
+
     private void OnEnable() => InputSystem.onActionChange += OnActionChange;
     private void OnDisable() => InputSystem.onActionChange -= OnActionChange;
 
     private void OnActionChange(object obj, InputActionChange change)
     {
-        if (change != InputActionChange.ActionPerformed)
-            return;
-
         var action = obj as InputAction;
-        if (action == null || action.activeControl == null)
-            return;
+
+        if (change != InputActionChange.ActionPerformed) return;
+        if (action == null || action.activeControl == null) return;
 
         gamepadMode = action.activeControl.device is Gamepad;
     }
