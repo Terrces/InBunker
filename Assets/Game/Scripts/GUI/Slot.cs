@@ -3,10 +3,21 @@ using UnityEngine.UI;
 
 public class Slot : MonoBehaviour
 {
-    [SerializeField] RawImage image;
+    [SerializeField] Item slotItem;
+    RawImage image;
 
-    public void UpdateSlot(Texture icon)
+    public void UpdateSlot(Item _item)
     {
-        image.texture = icon;
+        image = GetComponentInChildren<RawImage>();
+        image.texture = _item.getIcon();
+
+        slotItem = _item;
+    }
+    public void ResetItem(Texture texture)
+    {
+        slotItem = null;
+
+        image = GetComponentInChildren<RawImage>();
+        image.texture = texture;
     }
 }
