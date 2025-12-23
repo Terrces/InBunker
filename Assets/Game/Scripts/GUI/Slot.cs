@@ -9,7 +9,7 @@ public class Slot : MonoBehaviour
     public void UpdateSlot(Item _item)
     {
         image = GetComponentInChildren<RawImage>();
-        image.texture = _item.getIcon();
+        image.texture = _item.GetIcon();
 
         slotItem = _item;
     }

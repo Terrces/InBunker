@@ -209,7 +209,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Slot
   slotItem:
-    itemName: 
     icon: {fileID: 0}
 --- !u!1 &38510577
 GameObject:
@@ -301,57 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Slot
   slotItem:
-    itemName: 
     icon: {fileID: 0}
---- !u!1 &112729364
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 112729366}
-  - component: {fileID: 112729365}
-  m_Layer: 0
-  m_Name: ItemsList
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &112729365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 112729364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4427235f3b95b440b6a77e3fd69b99b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ItemsList
-  items:
-  - itemName: 
-    icon: {fileID: 0}
-  - itemName: 
-    icon: {fileID: 0}
---- !u!4 &112729366
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 112729364}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 824.34143, y: 749.48224, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &144542101
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,7 +470,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Slot
   slotItem:
-    itemName: 
     icon: {fileID: 0}
 --- !u!1 &356240396
 GameObject:
@@ -2116,7 +2064,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Slot
   slotItem:
-    itemName: 
     icon: {fileID: 0}
 --- !u!1 &712024744
 GameObject:
@@ -2208,7 +2155,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Slot
   slotItem:
-    itemName: 
     icon: {fileID: 0}
 --- !u!1 &872651928
 GameObject:
@@ -2724,7 +2670,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Slot
   slotItem:
-    itemName: 
     icon: {fileID: 0}
 --- !u!1 &1194695692
 GameObject:
@@ -3097,7 +3042,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Slot
   slotItem:
-    itemName: 
     icon: {fileID: 0}
 --- !u!1 &1528716349
 GameObject:
@@ -3233,10 +3177,7 @@ MonoBehaviour:
   - {fileID: 1191024083}
   transparentImage: {fileID: 2800000, guid: 752d21e3cd3ab784bbd1fe43b85f6a6d, type: 3}
   testItem:
-    itemName: 
     icon: {fileID: 10900, guid: 0000000000000000f000000000000000, type: 0}
-  hideInventoryPosition: {x: 0, y: 150}
-  tweenDuration: 1
 --- !u!1 &1582226348
 GameObject:
   m_ObjectHideFlags: 0
@@ -3327,7 +3268,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Slot
   slotItem:
-    itemName: 
     icon: {fileID: 0}
 --- !u!1 &1597992678
 GameObject:
@@ -3546,7 +3486,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Slot
   slotItem:
-    itemName: 
     icon: {fileID: 0}
 --- !u!1 &1808205553
 GameObject:
@@ -3899,7 +3838,6 @@ SceneRoots:
   - {fileID: 1597992680}
   - {fileID: 636561147}
   - {fileID: 2027504405}
-  - {fileID: 112729366}
   - {fileID: 1901418166}
   - {fileID: 1145470029}
   - {fileID: 144542104}
