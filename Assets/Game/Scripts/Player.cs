@@ -56,6 +56,8 @@ public class Player : MonoBehaviour
         HandleMovement();
     }
 
+    #region Player Movement
+
     private void HandleMovement()
     {
         Vector3 move = transform.right * moveAction.ReadValue<Vector2>().x + transform.forward * moveAction.ReadValue<Vector2>().y;
@@ -72,8 +74,17 @@ public class Player : MonoBehaviour
             velocity.y += Physics.gravity.y * Time.deltaTime;
         }
 
-        characterController.Move((Vector3.Normalize(move) * moveSpeed * Time.deltaTime) + new Vector3(0,velocity.y,0) * Time.deltaTime);
+        CollisionFlags flags = characterController.Move((Vector3.Normalize(move) * moveSpeed * Time.deltaTime) + new Vector3(0,velocity.y,0) * Time.deltaTime);
+
+        if ((flags & CollisionFlags.Above) != 0 && velocity.y > 0)
+        {
+            velocity.y = -1f;
+        }
     }
+
+    #endregion
+
+    #region Handle camera rotations
 
     private void HandleCameraRotation()
     {
@@ -111,6 +122,10 @@ public class Player : MonoBehaviour
         transform.Rotate(Vector3.up * stickX);
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
     }
+    
+    #endregion
+
+    #region Switch input
 
     private void OnEnable() => InputSystem.onActionChange += OnActionChange;
     private void OnDisable() => InputSystem.onActionChange -= OnActionChange;
@@ -124,4 +139,6 @@ public class Player : MonoBehaviour
 
         gamepadMode = action.activeControl.device is Gamepad;
     }
+
+    #endregion
 }

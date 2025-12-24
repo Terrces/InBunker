@@ -3112,6 +3112,7 @@ GameObject:
   - component: {fileID: 1528716351}
   - component: {fileID: 1528716353}
   - component: {fileID: 1528716354}
+  - component: {fileID: 1528716355}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -3144,7 +3145,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -73.26453}
+  m_AnchoredPosition: {x: 0, y: -58}
   m_SizeDelta: {x: 0, y: 122.8358}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1528716351
@@ -3235,7 +3236,19 @@ MonoBehaviour:
   testItem:
     itemName: test
     icon: {fileID: 10900, guid: 0000000000000000f000000000000000, type: 0}
-  hideInventoryPosition: {x: 0, y: 20}
+--- !u!114 &1528716355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1528716349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 988dff0d043a326428097ba31fc587e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryView
+  hideInventoryPosition: {x: 0, y: 5}
   animationEase: 10
   tweenDuration: 1
 --- !u!1 &1582226348
@@ -3720,7 +3733,7 @@ Transform:
   m_GameObject: {fileID: 1901418165}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.87763, y: 1.141, z: -8.21}
+  m_LocalPosition: {x: 0.87763, y: 1.141, z: -5.83}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3766,7 +3779,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   moveSpeed: 3
-  jumpHeight: 0
+  jumpHeight: 0.5
   mouseSensitivity: 25
   mouseSmoothTime: 0.05
   gamepadMode: 0
