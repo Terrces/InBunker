@@ -7,6 +7,11 @@ public class Slot : MonoBehaviour
     [SerializeField] Item slotItem;
     RawImage image;
 
+    public Item GetSlotItem()
+    {
+        return slotItem;
+    }
+
     public void UpdateSlot(Item _item)
     {
         image = GetComponentInChildren<RawImage>();

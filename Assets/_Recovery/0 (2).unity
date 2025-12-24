@@ -210,10 +210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Slot
   slotItem:
     itemName: 
-    itemDescription: 
     icon: {fileID: 0}
-    maxStack: 1
-    type: 0
 --- !u!1 &38510577
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,10 +302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Slot
   slotItem:
     itemName: 
-    itemDescription: 
     icon: {fileID: 0}
-    maxStack: 1
-    type: 0
 --- !u!1 &112729364
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,16 +333,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemsList
   items:
-  - itemName: Negroy
-    itemDescription: adklawawd
-    icon: {fileID: 2800000, guid: 8da095e39e9b4df488dfd436f81116d6, type: 3}
-    maxStack: 1
-    type: 2
-  - itemName: Test
-    itemDescription: adklawawd
-    icon: {fileID: 2800000, guid: 8da095e39e9b4df488dfd436f81116d6, type: 3}
-    maxStack: 1
-    type: 2
+  - itemName: 
+    icon: {fileID: 0}
+  - itemName: 
+    icon: {fileID: 0}
 --- !u!4 &112729366
 Transform:
   m_ObjectHideFlags: 0
@@ -534,10 +522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Slot
   slotItem:
     itemName: 
-    itemDescription: 
     icon: {fileID: 0}
-    maxStack: 1
-    type: 0
 --- !u!1 &356240396
 GameObject:
   m_ObjectHideFlags: 0
@@ -2132,10 +2117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Slot
   slotItem:
     itemName: 
-    itemDescription: 
     icon: {fileID: 0}
-    maxStack: 1
-    type: 0
 --- !u!1 &712024744
 GameObject:
   m_ObjectHideFlags: 0
@@ -2227,10 +2209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Slot
   slotItem:
     itemName: 
-    itemDescription: 
     icon: {fileID: 0}
-    maxStack: 1
-    type: 0
 --- !u!1 &872651928
 GameObject:
   m_ObjectHideFlags: 0
@@ -2746,10 +2725,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Slot
   slotItem:
     itemName: 
-    itemDescription: 
     icon: {fileID: 0}
-    maxStack: 1
-    type: 0
 --- !u!1 &1194695692
 GameObject:
   m_ObjectHideFlags: 0
@@ -2808,7 +2784,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.1
+  near clip plane: 0.3
   far clip plane: 100
   field of view: 50
   orthographic: 0
@@ -3122,10 +3098,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Slot
   slotItem:
     itemName: 
-    itemDescription: 
     icon: {fileID: 0}
-    maxStack: 1
-    type: 0
 --- !u!1 &1528716349
 GameObject:
   m_ObjectHideFlags: 0
@@ -3262,10 +3235,7 @@ MonoBehaviour:
   transparentImage: {fileID: 2800000, guid: 752d21e3cd3ab784bbd1fe43b85f6a6d, type: 3}
   testItem:
     itemName: test
-    itemDescription: 
     icon: {fileID: 10900, guid: 0000000000000000f000000000000000, type: 0}
-    maxStack: 1
-    type: 0
 --- !u!114 &1528716355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3373,10 +3343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Slot
   slotItem:
     itemName: 
-    itemDescription: 
     icon: {fileID: 0}
-    maxStack: 1
-    type: 0
 --- !u!1 &1597992678
 GameObject:
   m_ObjectHideFlags: 0
@@ -3595,10 +3562,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Slot
   slotItem:
     itemName: 
-    itemDescription: 
     icon: {fileID: 0}
-    maxStack: 1
-    type: 0
 --- !u!1 &1808205553
 GameObject:
   m_ObjectHideFlags: 0
@@ -3871,7 +3835,6 @@ MonoBehaviour:
   locations:
   - {fileID: 8202058045019569908, guid: 24a3efde014dc894cad1ffbbd1f26047, type: 3}
   firstChunkPostion: {x: 0, y: 2, z: 0}
-  itemsList: {fileID: 112729365}
 --- !u!1 &2066821313
 GameObject:
   m_ObjectHideFlags: 0

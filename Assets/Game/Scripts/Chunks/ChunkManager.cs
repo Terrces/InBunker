@@ -9,6 +9,7 @@ public class ChunkManager : MonoBehaviour
     [SerializeField] List<GameObject> locations = new List<GameObject>();
     [SerializeField] Vector3 firstChunkPostion = new Vector3(0f,0f,0f);
     [SerializeField] Queue<GameObject> chunksQueue;
+    [SerializeField] ItemsList itemsList;
 
     private int playerInChunkId = 0;
     private int lastChunkID = 0;
