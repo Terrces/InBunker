@@ -9,6 +9,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] Item testItem;
     [Header("Visual")]
     [SerializeField] Vector2 hideInventoryPosition;
+    [SerializeField] Ease animationEase;
     [SerializeField] float tweenDuration;
     Vector3 StartInventoryPosition;
     private RectTransform rect;
@@ -17,7 +18,14 @@ public class Inventory : MonoBehaviour
     {
         rect = GetComponent<RectTransform>();
         StartInventoryPosition = rect.anchoredPosition;
+
     }
+    void Start()
+    {
+        HideInventory();
+    }
+    
+    // Inventory logic
 
     public void AddItem(int slot)
     {
@@ -27,7 +35,6 @@ public class Inventory : MonoBehaviour
     public void SubstractItem(int slot)
     {
         Slot slotComponent = slots[slot].GetComponent<Slot>();
-        // slotComponent.UpdateSlot(nullItem);
         slotComponent.ResetItem(transparentImage);
     }
     public void CheckAvailableSlots()
@@ -35,21 +42,26 @@ public class Inventory : MonoBehaviour
         
     }
 
+    // Visual logic
+    
     [ContextMenu("Show Inventory")]
-    public void ShowInventory()
+    public void ShowInventory() => tweenAnimation(StartInventoryPosition.y);
+    
+    [ContextMenu("Hide Inventory")]
+    public void HideInventory() => tweenAnimation(hideInventoryPosition.y, 0.05f);
+
+    private void tweenAnimation(float endPositionY,float additionalDuration = 0.1f)
     {
-        if (StartInventoryPosition != Vector3.zero)
+        float _additionalDuration = 0f;
+        foreach (GameObject obj in slots)
         {
-            rect.DOAnchorPos(StartInventoryPosition,tweenDuration).SetEase(Ease.InOutSine);
+            RectTransform _rect = obj.GetComponent<RectTransform>();
+            _rect.DOAnchorPosY(endPositionY, tweenDuration + _additionalDuration).SetEase(animationEase);
+            _additionalDuration += additionalDuration;
         }
     }
 
-
-    [ContextMenu("Hide Inventory")]
-    public void HideInventory()
-    {
-        rect.DOAnchorPos(hideInventoryPosition, tweenDuration).SetEase(Ease.InOutSine);
-    }
+    // Functions for testing mechanics
 
     [ContextMenu("test item")]
     public void test()
