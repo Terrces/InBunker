@@ -214,6 +214,8 @@ MonoBehaviour:
     icon: {fileID: 0}
     maxStack: 1
     type: 0
+    droppedObject: {fileID: 0}
+    droppable: 0
 --- !u!1 &38510577
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,6 +311,8 @@ MonoBehaviour:
     icon: {fileID: 0}
     maxStack: 1
     type: 0
+    droppedObject: {fileID: 0}
+    droppable: 0
 --- !u!1 &112729364
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,11 +348,15 @@ MonoBehaviour:
     icon: {fileID: 2800000, guid: 8da095e39e9b4df488dfd436f81116d6, type: 3}
     maxStack: 1
     type: 2
+    droppedObject: {fileID: 0}
+    droppable: 0
   - itemName: Test
     itemDescription: adklawawd
     icon: {fileID: 2800000, guid: 8da095e39e9b4df488dfd436f81116d6, type: 3}
     maxStack: 1
     type: 2
+    droppedObject: {fileID: 0}
+    droppable: 0
 --- !u!4 &112729366
 Transform:
   m_ObjectHideFlags: 0
@@ -538,6 +546,8 @@ MonoBehaviour:
     icon: {fileID: 0}
     maxStack: 1
     type: 0
+    droppedObject: {fileID: 0}
+    droppable: 0
 --- !u!1 &356240396
 GameObject:
   m_ObjectHideFlags: 0
@@ -2136,6 +2146,8 @@ MonoBehaviour:
     icon: {fileID: 0}
     maxStack: 1
     type: 0
+    droppedObject: {fileID: 0}
+    droppable: 0
 --- !u!1 &712024744
 GameObject:
   m_ObjectHideFlags: 0
@@ -2231,6 +2243,8 @@ MonoBehaviour:
     icon: {fileID: 0}
     maxStack: 1
     type: 0
+    droppedObject: {fileID: 0}
+    droppable: 0
 --- !u!1 &872651928
 GameObject:
   m_ObjectHideFlags: 0
@@ -2750,6 +2764,8 @@ MonoBehaviour:
     icon: {fileID: 0}
     maxStack: 1
     type: 0
+    droppedObject: {fileID: 0}
+    droppable: 0
 --- !u!1 &1194695692
 GameObject:
   m_ObjectHideFlags: 0
@@ -3126,6 +3142,8 @@ MonoBehaviour:
     icon: {fileID: 0}
     maxStack: 1
     type: 0
+    droppedObject: {fileID: 0}
+    droppable: 0
 --- !u!1 &1528716349
 GameObject:
   m_ObjectHideFlags: 0
@@ -3260,12 +3278,7 @@ MonoBehaviour:
   - {fileID: 348625675}
   - {fileID: 1191024083}
   transparentImage: {fileID: 2800000, guid: 752d21e3cd3ab784bbd1fe43b85f6a6d, type: 3}
-  testItem:
-    itemName: test
-    itemDescription: 
-    icon: {fileID: 10900, guid: 0000000000000000f000000000000000, type: 0}
-    maxStack: 1
-    type: 0
+  itemsList: {fileID: 112729365}
 --- !u!114 &1528716355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3377,6 +3390,8 @@ MonoBehaviour:
     icon: {fileID: 0}
     maxStack: 1
     type: 0
+    droppedObject: {fileID: 0}
+    droppable: 0
 --- !u!1 &1597992678
 GameObject:
   m_ObjectHideFlags: 0
@@ -3599,6 +3614,8 @@ MonoBehaviour:
     icon: {fileID: 0}
     maxStack: 1
     type: 0
+    droppedObject: {fileID: 0}
+    droppable: 0
 --- !u!1 &1808205553
 GameObject:
   m_ObjectHideFlags: 0
@@ -3869,7 +3886,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChunkManager
   chunk: {fileID: 3118698078082252254, guid: 54c1fed2acd1c9f4ea07f53c23660dc9, type: 3}
   locations:
-  - {fileID: 8202058045019569908, guid: 24a3efde014dc894cad1ffbbd1f26047, type: 3}
+  - LocationObject: {fileID: 8202058045019569908, guid: 24a3efde014dc894cad1ffbbd1f26047, type: 3}
+    Offset: {x: 0, y: 4, z: 0}
+    TurnRadian: {x: 0, y: -90, z: 0}
+    EnableRotating: 1
   firstChunkPostion: {x: 0, y: 2, z: 0}
   itemsList: {fileID: 112729365}
 --- !u!1 &2066821313

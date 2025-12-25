@@ -192,17 +192,9 @@ MonoBehaviour:
   m_Mesh: {fileID: 0}
   m_VersionIndex: 2017
   m_IsSelectable: 1
-  m_SelectedFaces: 02000000
-  m_SelectedEdges:
-  - a: 10
-    b: 11
-  - a: 11
-    b: 9
-  - a: 9
-    b: 8
-  - a: 8
-    b: 10
-  m_SelectedVertices: 0a0000000b0000000900000008000000
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
 --- !u!114 &1304441133592346319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,7 +307,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9131173090918492279}
-  - component: {fileID: 9219153501225837399}
   m_Layer: 0
   m_Name: MainLocation
   m_TagString: Untagged
@@ -340,21 +331,6 @@ Transform:
   - {fileID: 3739412351494943097}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9219153501225837399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8202058045019569908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2d7898c107402745950ac874b25415c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ChunkLocation
-  offset: {x: 0, y: 4, z: 0}
-  enableLocationRotation: 1
-  rotationRadius: {x: 0, y: -90, z: 0}
 --- !u!1001 &5363728407042216263
 PrefabInstance:
   m_ObjectHideFlags: 0

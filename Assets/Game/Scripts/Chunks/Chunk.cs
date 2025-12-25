@@ -7,29 +7,17 @@ public class Chunk : MonoBehaviour
     private int id;
     private GameObject location;
     private ChunkManager chunkManager;
-    private Vector3 offset;
-    private bool enableLocationRotating;
-    private Vector3 rotationRadius;
     private states currentState;
 
-    public void Init(int _id, GameObject _location)
+    public void Init(int _id, Location _location)
     {
         id = _id;
-        location = _location;
+        location = _location.LocationObject;
 
-        GameObject _locationObject = Instantiate(_location, position:transform.position, transform.rotation,parent:transform);
-        ChunkLocation chunkLocation = _locationObject.GetComponent<ChunkLocation>();
-
-        offset = chunkLocation.GetOffset();
-        enableLocationRotating = chunkLocation.GetLocationRotating();
-        rotationRadius = chunkLocation.GetRotationRadius();
+        Instantiate(location, position:transform.position, transform.rotation,parent:transform);
     }
 
     public void setChunkManager(ChunkManager _manager) => chunkManager = _manager;
-    public void setLocation(GameObject _location) => location = _location;
-    public Vector3 GetOffset() => offset;
-    public bool GetLocationRotating() => enableLocationRotating;
-    public Vector3 GetRotationRadius() => rotationRadius;
 
     void OnTriggerEnter(Collider other)
     {

@@ -10,6 +10,7 @@ public class ItemsList:MonoBehaviour
         if (index > items.Count) {Debug.Log("Out of bounds"); return null;}
         return items[index];
     }
+    
     public Item GetItemByName(string name)
     {
         name = name.ToLower();
@@ -22,6 +23,21 @@ public class ItemsList:MonoBehaviour
         }
 
         Debug.Log("Item By Name not found");
+
+        return null;
+    }
+
+    public Item GetItemByObject(GameObject gameObject)
+    {
+        for(int i = 0; i < items.Count; i++)
+        {
+            if (items[i].GetDroppedObject() == gameObject)
+            {
+                return items[i];
+            }
+        }
+
+        Debug.Log("Item By Object not found");
 
         return null;
     }

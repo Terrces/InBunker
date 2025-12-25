@@ -6,7 +6,7 @@ using UnityEngine;
 public class ChunkManager : MonoBehaviour
 {
     [SerializeField] GameObject chunk;
-    [SerializeField] List<GameObject> locations = new List<GameObject>();
+    [SerializeField] List<Location> locations = new List<Location>();
     [SerializeField] Vector3 firstChunkPostion = new Vector3(0f,0f,0f);
     [SerializeField] Queue<GameObject> chunksQueue;
     [SerializeField] ItemsList itemsList;
@@ -22,9 +22,9 @@ public class ChunkManager : MonoBehaviour
     void Start() => GenerateNextChunk(true,locations[0]);
 
     public void setPlayerChunk(int _id) => playerInChunkId = _id;
-    public GameObject getLocation(int _index) => locations[_index];
+    public Location getLocation(int _index) => locations[_index];
 
-    public void GenerateNextChunk(bool firstChunk = false, GameObject _location = null)
+    public void GenerateNextChunk(bool firstChunk = false, Location _location = null)
     {
         GameObject _chunk = Instantiate(chunk,transform.position,transform.rotation,parent:transform);
         Chunk chunkComponent = _chunk.GetComponent<Chunk>();
@@ -43,8 +43,8 @@ public class ChunkManager : MonoBehaviour
         }
 
         chunkComponent.Init(chunkID, _location);
-        lastPosition += chunkComponent.GetOffset();
-        if (chunkComponent.GetLocationRotating()) _chunk.transform.rotation = addChunkRotation(chunkComponent.GetRotationRadius());
+        lastPosition += _location.Offset;
+        if (_location.EnableRotating) _chunk.transform.rotation = addChunkRotation(_location.TurnRadian);
         _chunk.transform.position += lastPosition;
     }
     
