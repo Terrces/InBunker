@@ -17,7 +17,7 @@ public class ChunkManager : MonoBehaviour
     private Vector3 lastPosition;
     private Vector3 lastRotation;
 
-    // Queue<GameObject> chunkQueue;
+    Queue<GameObject> chunkQueue;
 
     void Start() => GenerateNextChunk(true,locations[0]);
 
@@ -55,6 +55,7 @@ public class ChunkManager : MonoBehaviour
             math.radians(lastRotation.y += _rotation.y), 
             math.radians(lastRotation.z += _rotation.z)
             );
+            
         return rotation;
     }
 
