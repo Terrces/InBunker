@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
 
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 5.0f;
-    [SerializeField] private float jumpHeight = 25.0f;
+    [SerializeField] private float jumpForce = 2.0f;
 
     [Header("Camera Settings")]
     // mouse properties
@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
 
     // gamepad properties
     [SerializeField] private bool gamepadMode = false;
-    [SerializeField] private float gamepadSensitivity = 25.0f;
+    [SerializeField] private float gamepadSensitivity = 250.0f;
     [SerializeField] private float gamepadDeadZone = 0.001f;
     [SerializeField] private Transform cameraTransform;
 
@@ -29,23 +29,29 @@ public class Player : MonoBehaviour
     private float xRotation = 0f;
     private float xRotationVelocity;
     private float yRotationVelocity;
-
+    
     private InputAction moveAction;
     private InputAction jumpAction;
     private InputAction lookAction;
-    // private InputAction interactAction;
+    private InputAction interactAction;
+    private Interaction interactionComponent;
 
-    private void Start()
+    private void Awake()
     {
         characterController = GetComponent<CharacterController>();
-
-        if (tag == "Untagged") tag = "Player";
 
         moveAction = InputSystem.actions.FindAction("Move");
         jumpAction = InputSystem.actions.FindAction("Jump");
         lookAction = InputSystem.actions.FindAction("Look");
-        // if you need interact:
-        // interactAction = InputSystem.actions.FindAction("Interact");
+        // if you need interact
+        interactionComponent = GetComponent<Interaction>();
+        interactAction = InputSystem.actions.FindAction("Interact");
+
+    }
+
+    private void Start()
+    {
+        if (tag == "Untagged") tag = "Player";
 
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -54,7 +60,25 @@ public class Player : MonoBehaviour
     { 
         HandleCameraRotation();
         HandleMovement();
+        if (interactAction.WasPressedThisFrame()) interactionComponent.OnInteract();
     }
+    
+    #region Input
+
+    private void OnEnable() => InputSystem.onActionChange += OnActionChange;
+    private void OnDisable() => InputSystem.onActionChange -= OnActionChange;
+
+    private void OnActionChange(object obj, InputActionChange change)
+    {
+        var action = obj as InputAction;
+
+        if (change != InputActionChange.ActionPerformed) return;
+        if (action == null || action.activeControl == null) return;
+
+        gamepadMode = action.activeControl.device is Gamepad;
+    }
+
+    #endregion
 
     #region Player Movement
 
@@ -65,16 +89,19 @@ public class Player : MonoBehaviour
         if(characterController.isGrounded && velocity.y < 0)
             velocity.y = -2f;
 
-        if (jumpAction.IsPressed() && characterController.isGrounded && jumpHeight != 0)
+        if (jumpAction.WasPressedThisFrame() && characterController.isGrounded && jumpForce != 0)
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y);
+            velocity.y = Mathf.Sqrt(jumpForce * -2f * Physics.gravity.y);
         }
         else if(!characterController.isGrounded)
         {
             velocity.y += Physics.gravity.y * Time.deltaTime;
         }
 
-        CollisionFlags flags = characterController.Move((Vector3.Normalize(move) * moveSpeed * Time.deltaTime) + new Vector3(0,velocity.y,0) * Time.deltaTime);
+        Vector3 motion = move.normalized * moveSpeed;
+        motion.y = velocity.y;
+
+        CollisionFlags flags = characterController.Move(motion * Time.deltaTime);
 
         if ((flags & CollisionFlags.Above) != 0 && velocity.y > 0)
         {
@@ -125,20 +152,4 @@ public class Player : MonoBehaviour
     
     #endregion
 
-    #region Switch input
-
-    private void OnEnable() => InputSystem.onActionChange += OnActionChange;
-    private void OnDisable() => InputSystem.onActionChange -= OnActionChange;
-
-    private void OnActionChange(object obj, InputActionChange change)
-    {
-        var action = obj as InputAction;
-
-        if (change != InputActionChange.ActionPerformed) return;
-        if (action == null || action.activeControl == null) return;
-
-        gamepadMode = action.activeControl.device is Gamepad;
-    }
-
-    #endregion
 }

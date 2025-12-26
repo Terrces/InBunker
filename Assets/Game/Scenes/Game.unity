@@ -3769,8 +3769,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1901418166}
-  - component: {fileID: 1901418168}
   - component: {fileID: 1901418167}
+  - component: {fileID: 1901418168}
+  - component: {fileID: 1901418169}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -3833,13 +3834,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   moveSpeed: 3
-  jumpHeight: 0.5
+  jumpForce: 2
   mouseSensitivity: 25
   mouseSmoothTime: 0.05
   gamepadMode: 0
   gamepadSensitivity: 250
   gamepadDeadZone: 0.001
   cameraTransform: {fileID: 1194695695}
+--- !u!114 &1901418169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901418165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 223a94cdfac824045b26e1a893732fed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Interaction
 --- !u!1 &2027504404
 GameObject:
   m_ObjectHideFlags: 0
