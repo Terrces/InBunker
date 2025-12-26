@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     [SerializeField] private bool gamepadMode = false;
     [SerializeField] private float gamepadSensitivity = 250.0f;
     [SerializeField] private float gamepadDeadZone = 0.001f;
-    [SerializeField] private Transform cameraTransform;
+    public Transform cameraTransform;
 
     private CharacterController characterController;
     private Vector3 velocity;

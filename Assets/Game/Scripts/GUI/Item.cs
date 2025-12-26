@@ -16,7 +16,7 @@ public class Item
     public string GetName() => itemName; 
     public string GetDescription() => itemName; 
     public int GetMaxStack() => maxStack; 
-    public ItemTypes GetType() => type; 
+    public ItemTypes GetItemType() => type; 
     public GameObject GetDroppedObject() => droppedObject;
     public bool GetDroppable() => droppable; 
 
