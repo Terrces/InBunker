@@ -8,7 +8,7 @@ public class Interaction : MonoBehaviour
 
     public IdropableObject carriedObject;
     private Player player;
-    [SerializeField] float AddictionalZ;
+    [SerializeField] float maxZCoordinate;
 
     private void Awake()
     {
@@ -57,7 +57,7 @@ public class Interaction : MonoBehaviour
     {
         Vector3 cameraPos = player.cameraTransform.position;
         // Целевая точка — это позиция рук + твой AddictionalZ
-        Vector3 targetWorldPos = armPoint.position + (armPoint.forward * AddictionalZ);
+        Vector3 targetWorldPos = player.cameraTransform.position + (player.cameraTransform.forward * maxZCoordinate);
         
         Vector3 dir = targetWorldPos - cameraPos;
         float distance = dir.magnitude;

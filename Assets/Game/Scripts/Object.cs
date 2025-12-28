@@ -5,7 +5,7 @@ public class Object : MonoBehaviour, Iinteractable, IdropableObject
 {
     public Iinteractable.GameObjectTypes objectType { get; set; }
 
-    [SerializeField] private Vector3 localOffset;
+    [SerializeField] private Vector3 localOffset = new Vector3(0,-0.2f,2);
     [SerializeField] private Vector3 rotation;
     [SerializeField] private float moveSmoothTime = 0.15f;
 

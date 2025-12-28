@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
     { 
         HandleCameraRotation();
         HandleMovement();
-        if (interactAction.WasPressedThisFrame()) interactionComponent.CheckAction(2f);
+        if (interactAction.WasPressedThisFrame()) interactionComponent.CheckAction(0.2f);
         if (attackAction.WasPressedThisFrame() && interactionComponent.carriedObject != null) interactionComponent.CheckAction(dropForce);
     }
     
