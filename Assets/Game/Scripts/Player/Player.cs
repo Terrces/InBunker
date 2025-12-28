@@ -25,32 +25,18 @@ public class Player : MonoBehaviour
     [SerializeField] private float gamepadDeadZone = 0.001f;
     public Transform cameraTransform;
 
-    private CharacterController characterController;
+    private CharacterController characterController => GetComponent<CharacterController>();
     private Vector3 velocity;
     private float xRotation = 0f;
     private float xRotationVelocity;
     private float yRotationVelocity;
     
-    private InputAction moveAction;
-    private InputAction jumpAction;
-    private InputAction lookAction;
-    private InputAction attackAction;
-    private InputAction interactAction;
-    private Interaction interactionComponent;
-
-    private void Awake()
-    {
-        characterController = GetComponent<CharacterController>();
-
-        moveAction = InputSystem.actions.FindAction("Move");
-        jumpAction = InputSystem.actions.FindAction("Jump");
-        lookAction = InputSystem.actions.FindAction("Look");
-        attackAction = InputSystem.actions.FindAction("Attack");
-        // if you need interact
-        interactionComponent = GetComponent<Interaction>();
-        interactAction = InputSystem.actions.FindAction("Interact");
-
-    }
+    private InputAction moveAction => InputSystem.actions.FindAction("Move");
+    private InputAction jumpAction => InputSystem.actions.FindAction("Jump");
+    private InputAction lookAction => InputSystem.actions.FindAction("Look");
+    private InputAction attackAction => InputSystem.actions.FindAction("Attack");
+    private InputAction interactAction => InputSystem.actions.FindAction("Interact");
+    private Interaction interactionComponent => GetComponent<Interaction>();
 
     private void Start()
     {

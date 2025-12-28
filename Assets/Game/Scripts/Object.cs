@@ -1,4 +1,3 @@
-using DG.Tweening;
 using UnityEngine;
 
 public class Object : MonoBehaviour, Iinteractable, IdropableObject
@@ -6,62 +5,42 @@ public class Object : MonoBehaviour, Iinteractable, IdropableObject
     public Iinteractable.GameObjectTypes objectType { get; set; }
 
     [SerializeField] private Vector3 localOffset = new Vector3(0,-0.2f,2);
-    [SerializeField] private Vector3 rotation;
-    [SerializeField] private float moveSmoothTime = 0.15f;
+    [SerializeField] public Vector3 rotation;
+    [SerializeField] private float SmoothTime = 0.3f;
+    private LayerMask excludeLayer;
+    Vector3 velocity = Vector3.one;
+    private Transform hand;
+    private Rigidbody rigidBody => GetComponent<Rigidbody>();
 
-    private Rigidbody rb => GetComponent<Rigidbody>();
-    private Collider col => GetComponent<Collider>();
-
-    private bool tempFlag = false;
-
-    Transform arm;
-
-    public void Interact(Interaction interaction)
+    void FixedUpdate()
     {
-        arm = interaction.GetArm().transform;
-
-        rb.isKinematic = true;
-        rb.useGravity = false;
-        col.enabled = false;
-
-        transform.SetParent(arm);
-        transform.localRotation = Quaternion.Euler(rotation);
-    }
-
-    public void SetTargetPosition(Vector3 worldPosition, bool isAtArm)
-    {
-        if (!isAtArm) 
-        {
-            tempFlag = false;
-            
-            // Ключевой момент: переводим мировую точку в локальную для родителя (рук)
-            Vector3 localPos = transform.parent.InverseTransformPoint(worldPosition);
-            Vector3 finalPos = new Vector3(
-                localPos.normalized.x + localOffset.x, 
-                localPos.normalized.y + localOffset.y, 
-                localPos.z
-            );
-            // Debug.Log(finalPos.z);
-            transform.DOLocalMove(finalPos, moveSmoothTime);
-        }
-        else if (!tempFlag)
-        {
-            // Здесь используем заранее заданный локальный офсет (например, 0,0,0)
-            transform.DOLocalMove(localOffset, moveSmoothTime);
-            tempFlag = true;
+        if (hand)
+        {   
+            rigidBody.rotation = Quaternion.Slerp(rigidBody.rotation, hand.rotation * Quaternion.Euler(rotation), SmoothTime);
+            Vector3 target = hand.TransformPoint(localOffset);
+            // Vector3 smothPosition = Vector3.Lerp(transform.position, target, moveSmoothTime);
+            Vector3 smothPosition = Vector3.SmoothDamp(transform.position,target,ref velocity,SmoothTime);
+            rigidBody.MovePosition(smothPosition);
         }
     }
 
-    public void OnDrop(float force)
+    public void Interact(Transform _hand, LayerMask _layerMask)
     {
-        tempFlag = false;
-        transform.DOKill();
-        transform.SetParent(null);
-
-        col.enabled = true;
-        rb.isKinematic = false;
-        rb.useGravity = true;
-
-        rb.AddForce(arm.forward * force, ForceMode.Impulse);
+        hand = _hand;
+        
+        rigidBody.useGravity = false;
+        excludeLayer = _layerMask;
+        rigidBody.angularDamping = 0f;
+        rigidBody.excludeLayers += excludeLayer;
+    }
+    
+    public void OnDrop(float force = 0f)
+    {
+        transform.parent = null;
+        Vector3 vec = hand.forward;
+        rigidBody.excludeLayers -= excludeLayer;
+        hand = null;
+        rigidBody.useGravity = true;
+        rigidBody.AddForce(vec * force,ForceMode.Impulse);
     }
 }
