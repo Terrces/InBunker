@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 5.0f;
     [SerializeField] private float jumpForce = 2.0f;
+    [SerializeField] private float dropForce = 3f;
 
     [Header("Camera Settings")]
     // mouse properties
@@ -33,6 +34,7 @@ public class Player : MonoBehaviour
     private InputAction moveAction;
     private InputAction jumpAction;
     private InputAction lookAction;
+    private InputAction attackAction;
     private InputAction interactAction;
     private Interaction interactionComponent;
 
@@ -43,6 +45,7 @@ public class Player : MonoBehaviour
         moveAction = InputSystem.actions.FindAction("Move");
         jumpAction = InputSystem.actions.FindAction("Jump");
         lookAction = InputSystem.actions.FindAction("Look");
+        attackAction = InputSystem.actions.FindAction("Attack");
         // if you need interact
         interactionComponent = GetComponent<Interaction>();
         interactAction = InputSystem.actions.FindAction("Interact");
@@ -60,7 +63,8 @@ public class Player : MonoBehaviour
     { 
         HandleCameraRotation();
         HandleMovement();
-        if (interactAction.WasPressedThisFrame()) interactionComponent.OnInteract();
+        if (interactAction.WasPressedThisFrame()) interactionComponent.CheckAction(2f);
+        if (attackAction.WasPressedThisFrame() && interactionComponent.carriedObject != null) interactionComponent.CheckAction(dropForce);
     }
     
     #region Input
