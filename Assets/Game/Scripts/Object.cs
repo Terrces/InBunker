@@ -8,7 +8,6 @@ public class Object : MonoBehaviour, Iinteractable, IdropableObject
     [SerializeField] public Vector3 rotation;
     [SerializeField] private float SmoothTime = 0.3f;
     private LayerMask excludeLayer;
-    Vector3 velocity = Vector3.one;
     private Transform hand;
     private Rigidbody rigidBody => GetComponent<Rigidbody>();
 
@@ -16,11 +15,10 @@ public class Object : MonoBehaviour, Iinteractable, IdropableObject
     {
         if (hand)
         {   
-            rigidBody.rotation = Quaternion.Slerp(rigidBody.rotation, hand.rotation * Quaternion.Euler(rotation), SmoothTime);
             Vector3 target = hand.TransformPoint(localOffset);
-            // Vector3 smothPosition = Vector3.Lerp(transform.position, target, moveSmoothTime);
-            Vector3 smothPosition = Vector3.SmoothDamp(transform.position,target,ref velocity,SmoothTime);
-            rigidBody.MovePosition(smothPosition);
+            rigidBody.rotation = hand.rotation * Quaternion.Euler(rotation);
+            Vector3 smoothPosition = Vector3.Lerp(transform.position, target, Time.fixedDeltaTime * SmoothTime);
+            rigidBody.position = smoothPosition;
         }
     }
 
@@ -28,6 +26,8 @@ public class Object : MonoBehaviour, Iinteractable, IdropableObject
     {
         hand = _hand;
         
+        rigidBody.interpolation = RigidbodyInterpolation.None;
+        rigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
         rigidBody.useGravity = false;
         excludeLayer = _layerMask;
         rigidBody.angularDamping = 0f;
