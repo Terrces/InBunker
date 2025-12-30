@@ -31,7 +31,6 @@ public class Object : MonoBehaviour, Iinteractable, IdropableObject
         rigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
         rigidBody.useGravity = false;
         excludeLayer = _layerMask;
-        rigidBody.angularDamping = 0.05f;
         rigidBody.freezeRotation = true;
         rigidBody.excludeLayers += excludeLayer;
     }
