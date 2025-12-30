@@ -151,4 +151,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Object
   localOffset: {x: 0.5, y: -0.1, z: 0.8}
   rotation: {x: 0, y: -180, z: 0}
-  SmoothTime: 20
+  SmoothTime: 25
