@@ -8,8 +8,6 @@ public class Interaction : MonoBehaviour
     private Player player => GetComponent<Player>();
 
     public IdropableObject carriedObject = null;
-    [SerializeField] float maxZCoordinate;
-
     public Transform GetArm() => armPoint;
 
     public void CheckAction(float force)
@@ -28,7 +26,7 @@ public class Interaction : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, maxDistance))
         {
 
-            if (hit.collider.TryGetComponent(out Iinteractable interactable)) interactable.Interact(GetArm(),mask);
+            if (hit.collider.TryGetComponent(out Iinteractable interactable)) interactable.Interact(this,GetArm(),mask);
             if (hit.collider.TryGetComponent(out IdropableObject dropable)) carriedObject = dropable;
         }
     }

@@ -9,6 +9,7 @@ public class Object : MonoBehaviour, Iinteractable, IdropableObject
     [SerializeField] private float SmoothTime = 0.3f;
     private LayerMask excludeLayer;
     private Transform hand;
+    private Interaction interaction;
     private Rigidbody rigidBody => GetComponent<Rigidbody>();
 
     void FixedUpdate()
@@ -17,30 +18,32 @@ public class Object : MonoBehaviour, Iinteractable, IdropableObject
         {   
             Vector3 target = hand.TransformPoint(localOffset);
             rigidBody.rotation = hand.rotation * Quaternion.Euler(rotation);
-            Vector3 smoothPosition = Vector3.Lerp(transform.position, target, Time.fixedDeltaTime * SmoothTime);
-            rigidBody.position = smoothPosition;
+            rigidBody.linearVelocity = (target - transform.position) * SmoothTime;
         }
     }
 
-    public void Interact(Transform _hand, LayerMask _layerMask)
+    public void Interact(Interaction _interaction,Transform _hand, LayerMask _layerMask)
     {
         hand = _hand;
+        interaction = _interaction;
         
         rigidBody.interpolation = RigidbodyInterpolation.None;
         rigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
         rigidBody.useGravity = false;
         excludeLayer = _layerMask;
-        rigidBody.angularDamping = 0f;
+        rigidBody.angularDamping = 0.05f;
+        rigidBody.freezeRotation = true;
         rigidBody.excludeLayers += excludeLayer;
     }
     
     public void OnDrop(float force = 0f)
     {
-        transform.parent = null;
         Vector3 vec = hand.forward;
         rigidBody.excludeLayers -= excludeLayer;
+        interaction.carriedObject = null;
         hand = null;
         rigidBody.useGravity = true;
+        rigidBody.freezeRotation = false;
         rigidBody.AddForce(vec * force,ForceMode.Impulse);
     }
 }

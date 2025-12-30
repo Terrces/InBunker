@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -17,7 +18,7 @@ public class ChunkManager : MonoBehaviour
     private Vector3 lastPosition;
     private Vector3 lastRotation;
 
-    Queue<GameObject> chunkQueue;
+    public List<Chunk> chunkQueue;
 
     void Start() => GenerateNextChunk(true,locations[0]);
 
