@@ -149,6 +149,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 430a506411bd6eb4caa97a7d7bedb878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Object
-  localOffset: {x: 0.5, y: -0.1, z: 0.8}
+  localOffset: {x: 0.4, y: -0.1, z: 1}
   rotation: {x: 0, y: -180, z: 0}
   SmoothTime: 25

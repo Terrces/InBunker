@@ -1,12 +1,5 @@
 {
   "dependencies": {
-    "com.autodesk.fbx": {
-      "version": "5.1.2",
-      "depth": 2,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
@@ -58,26 +51,6 @@
       "source": "builtin",
       "dependencies": {}
     },
-    "com.unity.feature.worldbuilding": {
-      "version": "1.0.1",
-      "depth": 0,
-      "source": "builtin",
-      "dependencies": {
-        "com.unity.probuilder": "6.0.8",
-        "com.unity.formats.fbx": "5.1.5",
-        "com.unity.terrain-tools": "5.3.1"
-      }
-    },
-    "com.unity.formats.fbx": {
-      "version": "5.1.5",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {
-        "com.autodesk.fbx": "5.1.1",
-        "com.unity.timeline": "1.7.1"
-      },
-      "url": "https://packages.unity.com"
-    },
     "com.unity.ide.rider": {
       "version": "3.0.38",
       "depth": 0,
@@ -128,8 +101,8 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.probuilder": {
-      "version": "6.0.8",
-      "depth": 1,
+      "version": "6.0.7",
+      "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.shadergraph": "17.0.3",
@@ -180,7 +153,7 @@
     },
     "com.unity.settings-manager": {
       "version": "2.1.1",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -193,16 +166,6 @@
         "com.unity.render-pipelines.core": "17.3.0",
         "com.unity.searcher": "4.9.3"
       }
-    },
-    "com.unity.terrain-tools": {
-      "version": "5.3.1",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.modules.terrain": "1.0.0",
-        "com.unity.modules.terrainphysics": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
       "version": "1.6.0",
