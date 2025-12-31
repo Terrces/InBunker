@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -18,7 +17,7 @@ public class ChunkManager : MonoBehaviour
     private Vector3 lastPosition;
     private Vector3 lastRotation;
 
-    public List<Chunk> chunkQueue;
+    public List<GameObject> chunkQueue;
 
     void Start() => GenerateNextChunk(true,locations[0]);
 
@@ -33,6 +32,8 @@ public class ChunkManager : MonoBehaviour
         chunkComponent.setChunkManager(this);
 
         int chunkID = lastChunkID += 1; 
+        
+        chunkQueue.Add(_chunk);
 
         if (firstChunk) 
         {
@@ -47,6 +48,20 @@ public class ChunkManager : MonoBehaviour
         lastPosition += _location.Offset;
         if (_location.EnableRotating) _chunk.transform.rotation = addChunkRotation(_location.TurnRadian);
         _chunk.transform.position += lastPosition;
+        
+        unloadLastChunk();
+    }
+
+    private void unloadLastChunk()
+    {
+        // Debug.Log(playerInChunkId % (3 + 1));
+        // Нужно до делать
+        int count = 3;
+        if (playerInChunkId % (count + 1) >= count)
+        {
+            Debug.Log(playerInChunkId-count+1);
+            chunkQueue[playerInChunkId-count+1].SetActive(false);
+        }
     }
     
     private quaternion addChunkRotation(Vector3 _rotation)
@@ -60,8 +75,4 @@ public class ChunkManager : MonoBehaviour
         return rotation;
     }
 
-    private void unloadLastChunk()
-    {
-        
-    }
 }

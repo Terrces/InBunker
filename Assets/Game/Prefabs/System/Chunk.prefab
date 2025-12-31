@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3165092850720995753}
   - component: {fileID: 4409946618157902496}
   - component: {fileID: 6577453352335667977}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Chunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
