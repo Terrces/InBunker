@@ -54,13 +54,9 @@ public class ChunkManager : MonoBehaviour
 
     private void unloadLastChunk()
     {
-        // Debug.Log(playerInChunkId % (3 + 1));
-        // Нужно до делать
-        int count = 3;
-        if (playerInChunkId % (count + 1) >= count)
+        if(chunkQueue.Count >= 5)
         {
-            Debug.Log(playerInChunkId-count+1);
-            chunkQueue[playerInChunkId-count+1].SetActive(false);
+            chunkQueue[playerInChunkId - 3 + 1].SetActive(false);
         }
     }
     

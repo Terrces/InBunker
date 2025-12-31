@@ -12,7 +12,7 @@ public class Object : MonoBehaviour, Iinteractable, IdropableObject
     private Interaction interaction;
     private Rigidbody rigidBody => GetComponent<Rigidbody>();
 
-    void FixedUpdate()
+    void Update()
     {
         if (hand)
         {   
