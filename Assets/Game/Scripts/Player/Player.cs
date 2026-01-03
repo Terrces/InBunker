@@ -8,7 +8,6 @@ using UnityEngine.InputSystem;
 [SelectionBase]
 public class Player : MonoBehaviour
 {
-
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 5.0f;
     [SerializeField] private float jumpForce = 2.0f;
@@ -24,6 +23,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float gamepadSensitivity = 250.0f;
     [SerializeField] private float gamepadDeadZone = 0.001f;
     public Transform cameraTransform;
+    public ChunkManager chunkManager;
 
     private CharacterController characterController => GetComponent<CharacterController>();
     private Vector3 velocity;
@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     { 
         HandleCameraRotation();
         HandleMovement();
-        if (interactAction.WasPressedThisFrame()) interactionComponent.CheckAction(0.2f);
+        if (interactAction.WasPressedThisFrame()) interactionComponent.CheckAction(0f);
         if (attackAction.WasPressedThisFrame() && interactionComponent.carriedObject != null) interactionComponent.CheckAction(dropForce);
     }
     

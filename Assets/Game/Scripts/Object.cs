@@ -6,7 +6,7 @@ public class Object : MonoBehaviour, Iinteractable, IdropableObject
 
     [SerializeField] private Vector3 localOffset = new Vector3(0,-0.2f,2);
     [SerializeField] public Vector3 rotation;
-    [SerializeField] private float SmoothTime = 0.3f;
+    private float smoothTime;
     private LayerMask excludeLayer;
     private Transform hand;
     private Interaction interaction;
@@ -18,15 +18,18 @@ public class Object : MonoBehaviour, Iinteractable, IdropableObject
         {   
             Vector3 target = hand.TransformPoint(localOffset);
             rigidBody.rotation = hand.rotation * Quaternion.Euler(rotation);
-            rigidBody.linearVelocity = (target - transform.position) * SmoothTime;
+            rigidBody.linearVelocity = (target - transform.position) * smoothTime;
         }
     }
 
-    public void Interact(Interaction _interaction,Transform _hand, LayerMask _layerMask)
+    public void Interact(Interaction _interaction,Transform _hand, float timeSpeed, LayerMask _layerMask)
     {
         hand = _hand;
         interaction = _interaction;
+        smoothTime = timeSpeed;
         
+        transform.SetParent(null);
+
         rigidBody.interpolation = RigidbodyInterpolation.None;
         rigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
         rigidBody.useGravity = false;
@@ -35,7 +38,7 @@ public class Object : MonoBehaviour, Iinteractable, IdropableObject
         rigidBody.excludeLayers += excludeLayer;
     }
     
-    public void OnDrop(float force = 0f)
+    public void OnDrop(float force = 0f, Properties properties = null)
     {
         Vector3 vec = hand.forward;
         rigidBody.excludeLayers -= excludeLayer;
@@ -44,5 +47,7 @@ public class Object : MonoBehaviour, Iinteractable, IdropableObject
         rigidBody.useGravity = true;
         rigidBody.freezeRotation = false;
         rigidBody.AddForce(vec * force,ForceMode.Impulse);
+        
+        transform.SetParent(properties.chunkManager.chunkQueue[properties.CurrentChunkID].transform);
     }
 }

@@ -1,14 +1,15 @@
-using System.Linq;
 using UnityEngine;
 
 [SelectionBase]
 public class Chunk : MonoBehaviour
 {
-    enum states {Generated,NextChunkGenerated,Unloaded}
+    public enum chunkGenerationStates {Generated,NextChunkGenerated}
+    public enum ChunkStates {Loaded,Unloaded}
     private int id;
     private GameObject location;
     private ChunkManager chunkManager;
-    private states currentState;
+    private chunkGenerationStates currentGenerationState;
+    public ChunkStates currentChunkState = ChunkStates.Loaded;
 
     public void Init(int _id, Location _location)
     {
@@ -16,7 +17,6 @@ public class Chunk : MonoBehaviour
         location = _location.LocationObject;
 
         Instantiate(location, position:transform.position, transform.rotation,parent:transform);
-        
     }
 
     public void setChunkManager(ChunkManager _manager) => chunkManager = _manager;
@@ -25,11 +25,15 @@ public class Chunk : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
         if (!chunkManager) return;
-        if (currentState == states.Generated) 
+        if (currentGenerationState == chunkGenerationStates.Generated) 
         {
             chunkManager.GenerateNextChunk(false,chunkManager.getLocation(0));
-            currentState = states.NextChunkGenerated;
+            currentGenerationState = chunkGenerationStates.NextChunkGenerated;
         }
-        chunkManager.setPlayerChunk(id);
+        chunkManager.setPlayerChunk(id, currentGenerationState);
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if (!other.CompareTag("Player")) return;
     }
 }
