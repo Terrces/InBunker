@@ -17,7 +17,7 @@ public class Interaction : MonoBehaviour
         if (carriedObject == null) TryInteract();
         else 
         {
-            carriedObject.OnDrop(force, properties);
+            carriedObject.Drop(force, properties);
             carriedObject = null;
         }
     }
@@ -28,7 +28,7 @@ public class Interaction : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, maxDistance))
         {
 
-            if (hit.collider.TryGetComponent(out Iinteractable interactable)) interactable.Interact(this, GetArm(), smoothTime, mask);
+            if (hit.collider.TryGetComponent(out Iinteractable interactable)) interactable.Interact(this, GetArm(), smoothTime, maxDistance, mask);
             if (hit.collider.TryGetComponent(out IdropableObject dropable)) carriedObject = dropable;
         }
     }

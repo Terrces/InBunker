@@ -1,4 +1,4 @@
 public interface IdropableObject
 {
-    public void OnDrop(float force = 0f, Properties properties = null);
+    public void Drop(float force = 0f, Properties properties = null);
 }

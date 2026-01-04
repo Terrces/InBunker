@@ -3812,6 +3812,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7052379276719246902, guid: e922177e441cf5543b541e2c5acb7f2c, type: 3}
+      propertyPath: localOffset.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7469191585865662272, guid: e922177e441cf5543b541e2c5acb7f2c, type: 3}
       propertyPath: m_Name
       value: flashlight
@@ -4102,8 +4106,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Interaction
   armPoint: {fileID: 805218479}
-  maxDistance: 5
-  smoothTime: 20
+  maxDistance: 3
+  smoothTime: 15
   mask:
     serializedVersion: 2
     m_Bits: 64
@@ -4122,7 +4126,6 @@ MonoBehaviour:
   CurrentChunkID: 0
   PreviouslyChunkID: 0
   chunkManager: {fileID: 2027504406}
-  currentChunkGenerationState: 0
 --- !u!1 &2027504404
 GameObject:
   m_ObjectHideFlags: 0

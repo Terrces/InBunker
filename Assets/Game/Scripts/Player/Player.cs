@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
     private InputAction jumpAction => InputSystem.actions.FindAction("Jump");
     private InputAction lookAction => InputSystem.actions.FindAction("Look");
     private InputAction attackAction => InputSystem.actions.FindAction("Attack");
+    private InputAction dropAction => InputSystem.actions.FindAction("Drop");
     private InputAction interactAction => InputSystem.actions.FindAction("Interact");
     private Interaction interactionComponent => GetComponent<Interaction>();
 
@@ -50,7 +51,7 @@ public class Player : MonoBehaviour
         HandleCameraRotation();
         HandleMovement();
         if (interactAction.WasPressedThisFrame()) interactionComponent.CheckAction(0f);
-        if (attackAction.WasPressedThisFrame() && interactionComponent.carriedObject != null) interactionComponent.CheckAction(dropForce);
+        if (dropAction.WasPressedThisFrame() && interactionComponent.carriedObject != null) interactionComponent.CheckAction(dropForce);
     }
     
     #region Input

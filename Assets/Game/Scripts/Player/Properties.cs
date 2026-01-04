@@ -6,7 +6,7 @@ public class Properties : MonoBehaviour
     public int PreviouslyChunkID;
 
     public ChunkManager chunkManager;
-    public Chunk.chunkGenerationStates currentChunkGenerationState;
+    // public Chunk.chunkGenerationStates currentChunkGenerationState;
 
     public void UpdateChunkID(int ChunkID,Chunk.chunkGenerationStates GenerationState)
     {
@@ -23,7 +23,7 @@ public class Properties : MonoBehaviour
         if (CurrentChunkID != ChunkID)
         {
             CurrentChunkID = ChunkID;
-            currentChunkGenerationState = GenerationState;
+            // currentChunkGenerationState = GenerationState;
             // Debug.Log($"Current chunk: {CurrentChunkID}");
         }
     }

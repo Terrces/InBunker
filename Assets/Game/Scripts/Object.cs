@@ -2,35 +2,43 @@ using UnityEngine;
 
 public class Object : MonoBehaviour, Iinteractable, IdropableObject
 {
-    public Iinteractable.GameObjectTypes objectType { get; set; }
-
     [SerializeField] private Vector3 localOffset = new Vector3(0,-0.2f,2);
     [SerializeField] public Vector3 rotation;
-    private float smoothTime;
+    private float moveSpeed;
     private LayerMask excludeLayer;
-    private Transform hand;
+    private Transform point;
     private Interaction interaction;
     private Rigidbody rigidBody => GetComponent<Rigidbody>();
+    private float maxDistance;
 
-    void Update()
+    void FixedUpdate()
     {
-        if (hand)
+        if (point)
         {   
-            Vector3 target = hand.TransformPoint(localOffset);
-            rigidBody.rotation = hand.rotation * Quaternion.Euler(rotation);
-            rigidBody.linearVelocity = (target - transform.position) * smoothTime;
+            Vector3 target = point.TransformPoint(localOffset);
+            Vector3 finalTarget = target - transform.position;
+            
+            if (finalTarget.sqrMagnitude > maxDistance)
+            {
+                Drop();
+                return;
+            }
+
+            rigidBody.rotation = point.rotation * Quaternion.Euler(rotation);
+            rigidBody.linearVelocity = finalTarget * (Time.fixedDeltaTime * (moveSpeed * 100));
         }
     }
 
-    public void Interact(Interaction _interaction,Transform _hand, float timeSpeed, LayerMask _layerMask)
+    public void Interact(Interaction _interaction,Transform _point, float _moveSpeed, float _maxDistance, LayerMask _layerMask)
     {
-        hand = _hand;
+        point = _point;
         interaction = _interaction;
-        smoothTime = timeSpeed;
+        moveSpeed = _moveSpeed;
+        maxDistance = _maxDistance;
         
         transform.SetParent(null);
 
-        rigidBody.interpolation = RigidbodyInterpolation.None;
+        rigidBody.interpolation = RigidbodyInterpolation.Interpolate;
         rigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
         rigidBody.useGravity = false;
         excludeLayer = _layerMask;
@@ -38,16 +46,17 @@ public class Object : MonoBehaviour, Iinteractable, IdropableObject
         rigidBody.excludeLayers += excludeLayer;
     }
     
-    public void OnDrop(float force = 0f, Properties properties = null)
+    public void Drop(float force = 0f, Properties properties = null)
     {
-        Vector3 vec = hand.forward;
+        Vector3 vec = point.forward;
         rigidBody.excludeLayers -= excludeLayer;
-        interaction.carriedObject = null;
-        hand = null;
+        
         rigidBody.useGravity = true;
         rigidBody.freezeRotation = false;
         rigidBody.AddForce(vec * force,ForceMode.Impulse);
         
-        transform.SetParent(properties.chunkManager.chunkQueue[properties.CurrentChunkID].transform);
+        if (interaction.carriedObject != null) interaction.carriedObject = null;
+        if (point != null) point = null;
+        if (properties != null) transform.SetParent(properties.chunkManager.chunkQueue[properties.CurrentChunkID].transform);
     }
 }
