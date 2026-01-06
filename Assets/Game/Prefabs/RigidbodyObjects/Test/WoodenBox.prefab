@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 7363868232240409909}
   - component: {fileID: 2894077285916100704}
   - component: {fileID: 2949118481099906831}
+  - component: {fileID: 3615284665271526897}
+  - component: {fileID: 6094614571844461443}
   m_Layer: 0
   m_Name: WoodenBox
   m_TagString: Untagged
@@ -123,7 +125,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1550662678292756372}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 5
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -156,6 +158,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Object
   localOffset: {x: 0, y: 0, z: 1}
   rotation: {x: 0, y: -180, z: 0}
+  interaction: {fileID: 0}
+--- !u!114 &3615284665271526897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550662678292756372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 816818cb20aa3164382144b10bb04967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Storage
+  objects:
+  - chance: 2
+    gameObject: {fileID: 7469191585865662272, guid: e922177e441cf5543b541e2c5acb7f2c, type: 3}
+  dropItems: 1
+--- !u!114 &6094614571844461443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550662678292756372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9861af3d76544e549a635ca158a6b4ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestroyableObject
+  maxForceSpeed: 5.5
+  durability: 5
 --- !u!1001 &7417592732574397082
 PrefabInstance:
   m_ObjectHideFlags: 0

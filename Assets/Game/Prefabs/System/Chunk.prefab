@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3165092850720995753}
   - component: {fileID: 4409946618157902496}
   - component: {fileID: 6577453352335667977}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Chunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 744c970a47bb6474f9f15d71ba3e7484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Chunk
+  currentChunkState: 0
 --- !u!65 &6577453352335667977
 BoxCollider:
   m_ObjectHideFlags: 0

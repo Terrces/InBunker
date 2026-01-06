@@ -50,8 +50,9 @@ public class Player : MonoBehaviour
     { 
         HandleCameraRotation();
         HandleMovement();
+        if (attackAction.WasPressedThisFrame()) interactionComponent.UseItem();
         if (interactAction.WasPressedThisFrame()) interactionComponent.CheckAction(0f);
-        if (dropAction.WasPressedThisFrame() && interactionComponent.carriedObject != null) interactionComponent.CheckAction(dropForce);
+        if (dropAction.WasPressedThisFrame()) interactionComponent.CheckAction(dropForce);
     }
     
     #region Input
