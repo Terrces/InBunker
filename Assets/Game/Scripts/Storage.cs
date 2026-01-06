@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Storage : MonoBehaviour
 {
+    enum returnType {oneCount,moreCount}
     public List<StorageInspector> objects = new List<StorageInspector>();
     [SerializeField] bool dropItems = true;
 
@@ -14,29 +15,26 @@ public class Storage : MonoBehaviour
         return maxRange;
     }
 
+    private GameObject returnObject(float value, returnType type)
+    {
+        float currentValue = 0f;
+
+        foreach(StorageInspector storage in objects)
+        {
+            if(type == returnType.oneCount && value <= 100) return storage.getObject();
+            else if(type == returnType.moreCount && (value <= (currentValue += storage.getChance()))) return storage.getObject();
+            else return null;
+        }
+
+        return null;
+    }
+
     public GameObject GetItem()
     {
         if (!dropItems) return null;
 
-        float randomValue;     
-        
-        if (objects.Count > 1)
-        {
-            float currentValue = 0f;
-            
-            randomValue = Random.Range(0, getMaxRange());
-            foreach(StorageInspector storage in objects)
-            {
-                if(randomValue <= (currentValue += storage.getChance()) ) return storage.getObject();
-            }
-        }
-        else if (objects.Count == 1)
-        {
-            randomValue = Random.Range(0,100);
-            if (randomValue <= objects[0].getChance()) return objects[0].getObject();
-            return null;
-        }
-        else return null;
+        if (objects.Count > 1) returnObject(Random.Range(0, getMaxRange()), returnType.moreCount);
+        else if (objects.Count == 1) returnObject(Random.Range(0,100),returnType.oneCount);
 
         return null;
     }

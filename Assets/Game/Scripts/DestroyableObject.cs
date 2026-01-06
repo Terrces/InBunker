@@ -19,17 +19,17 @@ public class DestroyableObject : MonoBehaviour
         if (storage != null) item = storage.GetItem();
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        // collision.collider.TryGetComponent(out Rigidbody _rigidBody);
-        // if (_rigidBody != null) return;
+    // void OnCollisionEnter(Collision collision)
+    // {
+    //     collision.collider.TryGetComponent(out Rigidbody _rigidBody);
+    //     if (_rigidBody != null) return;
 
-        // if (collision.relativeVelocity.sqrMagnitude >= rigidBody.mass*rigidBody.mass)
-        // {
-        //     impact = rigidBody.mass;
-        //     Break();
-        // }
-    }
+    //     if (collision.relativeVelocity.sqrMagnitude >= rigidBody.mass*rigidBody.mass)
+    //     {
+    //         impact = rigidBody.mass;
+    //         Break();
+    //     }
+    // }
 
     private bool damage()
     {
