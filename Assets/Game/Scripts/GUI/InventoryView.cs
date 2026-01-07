@@ -19,7 +19,7 @@ public class InventoryView : MonoBehaviour
     {
         rect = GetComponent<RectTransform>();
         StartInventoryPosition = rect.anchoredPosition;
-        foreach(GameObject slot in GetComponent<Inventory>().slots) slotsRects.Add(slot.GetComponent<RectTransform>());
+        // foreach(GameObject slot in GetComponent<Inventory>().slots) slotsRects.Add(slot.GetComponent<RectTransform>());
     }
 
     IEnumerator Timer()
