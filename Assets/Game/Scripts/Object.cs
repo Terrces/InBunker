@@ -8,6 +8,7 @@ public class Object : MonoBehaviour, Iinteractable, IdropableObject
     private LayerMask excludeLayer;
     private Transform Point;
     public Interaction interaction;
+    private Properties Properties;
     private Rigidbody rigidBody => GetComponent<Rigidbody>();
     private float maxDistance;
 
@@ -29,12 +30,13 @@ public class Object : MonoBehaviour, Iinteractable, IdropableObject
         }
     }
 
-    public void Interact(Interaction _interaction, Transform _point, float _moveSpeed, float _maxDistance, LayerMask _layerMask)
+    public void Interact(Interaction _interaction, Transform _point, float _moveSpeed, float _maxDistance, LayerMask _layerMask, Properties _properties)
     {
         Point = _point;
         interaction = _interaction;
         moveSpeed = _moveSpeed;
         maxDistance = _maxDistance;
+        Properties = _properties;
         
         transform.SetParent(null);
 
@@ -47,7 +49,7 @@ public class Object : MonoBehaviour, Iinteractable, IdropableObject
         rigidBody.excludeLayers += excludeLayer;
     }
     
-    public void Drop(float force = 0f, Properties properties = null)
+    public void Drop(float force = 0f)
     {
         Vector3 vec = Vector3.zero;
         if (Point != null) 
@@ -62,6 +64,6 @@ public class Object : MonoBehaviour, Iinteractable, IdropableObject
         rigidBody.AddForce(vec * (force-rigidBody.mass),ForceMode.Impulse);
 
         if (interaction != null) interaction.dropObject();
-        if (properties != null) transform.SetParent(properties.chunkManager.chunkQueue[properties.CurrentChunkID].transform);
+        if (Properties != null) transform.SetParent(Properties.chunkManager.chunkQueue[Properties.CurrentChunkID].transform);
     }
 }

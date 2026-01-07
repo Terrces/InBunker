@@ -20,7 +20,7 @@ public class Interaction : MonoBehaviour
         if (carriedObject == null) TryInteract();
         else
         {
-            carriedObject.GetComponent<Object>().Drop(force, properties);
+            carriedObject.GetComponent<Object>().Drop(force);
             carriedObject = null;
         }
     }
@@ -40,7 +40,7 @@ public class Interaction : MonoBehaviour
         Ray ray = new Ray(player.cameraTransform.position, player.cameraTransform.forward);
         if (Physics.Raycast(ray, out RaycastHit hit, maxDistance,interactionLayerMask))
         {
-            if (hit.collider.TryGetComponent(out Iinteractable interactable)) interactable.Interact(this, GetArm(), smoothTime, maxDistance, mask);
+            if (hit.collider.TryGetComponent(out Iinteractable interactable)) interactable.Interact(this, GetArm(), smoothTime, maxDistance, mask, properties);
             if (hit.collider.TryGetComponent(out Object _object)) carriedObject = _object;
             if (hit.collider.TryGetComponent(out Iusable usable)) carriedObjectUsableComponent = usable;
         }
