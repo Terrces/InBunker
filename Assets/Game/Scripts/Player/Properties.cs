@@ -2,16 +2,14 @@ using UnityEngine;
 
 public class Properties : MonoBehaviour
 {
-    public int CurrentChunkID = 1;
-    public int PreviouslyChunkID = 1;
-
+    [Header("Global")]
     public ChunkManager chunkManager;
+    [Header("Interaction")]
+    [SerializeField] private float maxInteractDistance = 5f;
+    [SerializeField] private float PickedUpMoveObjectSpeed = 20f;
+    [SerializeField] private float dropForce = 3f;
+    public float GetDropForce() => dropForce;
+    public float GetInteractDistance() => maxInteractDistance;
+    public float GetPickedUpMoveObjectSpeed() => PickedUpMoveObjectSpeed;
 
-    public void UpdateChunkID(int ChunkID)
-    {
-        if (PreviouslyChunkID != CurrentChunkID) PreviouslyChunkID = CurrentChunkID;
-        if (CurrentChunkID != ChunkID) CurrentChunkID = ChunkID;
-        if (PreviouslyChunkID > CurrentChunkID) chunkManager.loadChunk();
-        else chunkManager.unloadLastChunk();
-    }
 }

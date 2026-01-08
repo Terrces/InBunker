@@ -19,7 +19,7 @@ public class Chunk : MonoBehaviour
         Instantiate(location, position:transform.position, transform.rotation,parent:transform);
     }
     public int GetChunkID() => id;
-    void OnTriggerEnter(Collider other)
+    void PlayerEnteredCheck(Collider other)
     {
         if (!other.CompareTag("Player")) return;
         if (!chunkManager) return;
@@ -30,8 +30,5 @@ public class Chunk : MonoBehaviour
             currentGenerationState = chunkGenerationStates.NextChunkGenerated;
         }
     }
-    void OnTriggerExit(Collider other)
-    {
-        if (!other.CompareTag("Player")) return;
-    }
+    void OnTriggerEnter(Collider other) => PlayerEnteredCheck(other);
 }

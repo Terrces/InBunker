@@ -36,10 +36,12 @@ public class ChunkPoint : MonoBehaviour
 
     private void ApplyManipulations(GameObject instance, ChunkSubObjectInspector data)
     {
-        if(!data.DefaultScale)
+        if (!data.DefaultScale) instance.transform.localScale = Vector3.one * data.Scale;
+        if (data.RandomScale) instance.transform.localScale = Vector3.one * Random.Range(data.MinScale,data.Scale);
+        if (instance.TryGetComponent(out Rigidbody rigidbody))
         {
-            instance.transform.localScale = Vector3.one * data.Scale;
-            if(data.RandomScale) instance.transform.localScale = Vector3.one * Random.Range(data.MinScale,data.Scale);
+            if (!data.DefaultMass) rigidbody.mass = data.Mass;
+            if (data.RandomMass) rigidbody.mass = Random.Range(data.MinMass,data.Mass);
         }
 
         Vector3 rotation = data.Rotation;

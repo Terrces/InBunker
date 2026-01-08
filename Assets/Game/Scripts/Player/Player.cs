@@ -11,7 +11,6 @@ public class Player : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 5.0f;
     [SerializeField] private float jumpForce = 2.0f;
-    [SerializeField] private float dropForce = 3f;
 
     [Header("Camera Settings")]
     // mouse properties
@@ -23,9 +22,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float gamepadSensitivity = 250.0f;
     [SerializeField] private float gamepadDeadZone = 0.001f;
     public Transform cameraTransform;
-    public ChunkManager chunkManager;
 
     private CharacterController characterController => GetComponent<CharacterController>();
+    private Properties properties => GetComponent<Properties>();
     private Vector3 velocity;
     private float xRotation = 0f;
     private float xRotationVelocity;
@@ -50,9 +49,9 @@ public class Player : MonoBehaviour
     { 
         HandleCameraRotation();
         HandleMovement();
-        if (attackAction.WasPressedThisFrame()) interactionComponent.UseItem();
+        if (attackAction.WasPressedThisFrame()) interactionComponent.UseItem(cameraTransform);
         if (interactAction.WasPressedThisFrame()) interactionComponent.CheckAction(0f);
-        if (dropAction.WasPressedThisFrame()) interactionComponent.CheckAction(dropForce);
+        if (dropAction.WasPressedThisFrame()) interactionComponent.CheckAction(properties.GetDropForce());
     }
     
     #region Input

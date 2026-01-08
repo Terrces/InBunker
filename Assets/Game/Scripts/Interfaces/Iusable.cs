@@ -1,4 +1,6 @@
+using UnityEngine;
+
 public interface Iusable
 {
-    public void Use();
+    public void Use(Transform PointTransform);
 }

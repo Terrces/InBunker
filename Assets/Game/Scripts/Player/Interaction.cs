@@ -3,8 +3,6 @@ using UnityEngine;
 public class Interaction : MonoBehaviour
 {
     [SerializeField] private Transform Point;
-    [SerializeField] private float maxDistance = 5f;
-    [SerializeField] private float smoothTime = 20f;
     [SerializeField] private LayerMask mask;
     [SerializeField] private LayerMask interactionLayerMask;
     private Player player => GetComponent<Player>();
@@ -31,16 +29,16 @@ public class Interaction : MonoBehaviour
         carriedObjectUsableComponent = null;
     }
 
-    public void UseItem()
+    public void UseItem(Transform PointTransform)
     {
-        if (carriedObjectUsableComponent != null) carriedObjectUsableComponent.Use();
+        if (carriedObjectUsableComponent != null) carriedObjectUsableComponent.Use(PointTransform);
     }
     private void TryInteract()
     {
         Ray ray = new Ray(player.cameraTransform.position, player.cameraTransform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance,interactionLayerMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, properties.GetInteractDistance(),interactionLayerMask))
         {
-            if (hit.collider.TryGetComponent(out Iinteractable interactable)) interactable.Interact(this, GetArm(), smoothTime, maxDistance, mask, properties);
+            if (hit.collider.TryGetComponent(out Iinteractable interactable)) interactable.Interact(this, GetArm(), properties.GetPickedUpMoveObjectSpeed(), properties.GetInteractDistance(), mask, properties);
             if (hit.collider.TryGetComponent(out Object _object)) carriedObject = _object;
             if (hit.collider.TryGetComponent(out Iusable usable)) carriedObjectUsableComponent = usable;
         }
