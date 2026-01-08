@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class Interaction : MonoBehaviour
 {
     [SerializeField] private Transform Point;
