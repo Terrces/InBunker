@@ -2,29 +2,16 @@ using UnityEngine;
 
 public class Properties : MonoBehaviour
 {
-    public int CurrentChunkID;
-    public int PreviouslyChunkID;
+    public int CurrentChunkID = 1;
+    public int PreviouslyChunkID = 1;
 
     public ChunkManager chunkManager;
-    // public Chunk.chunkGenerationStates currentChunkGenerationState;
 
-    public void UpdateChunkID(int ChunkID,Chunk.chunkGenerationStates GenerationState)
+    public void UpdateChunkID(int ChunkID)
     {
-        if (PreviouslyChunkID != CurrentChunkID)
-        {
-            PreviouslyChunkID = CurrentChunkID;
-            if (CurrentChunkID < PreviouslyChunkID)
-            {
-                chunkManager.loadChunk();
-                Debug.Log("test 1");
-            }
-            Debug.Log($"Previously Chunk: {PreviouslyChunkID}");
-        }
-        if (CurrentChunkID != ChunkID)
-        {
-            CurrentChunkID = ChunkID;
-            // currentChunkGenerationState = GenerationState;
-            // Debug.Log($"Current chunk: {CurrentChunkID}");
-        }
+        if (PreviouslyChunkID != CurrentChunkID) PreviouslyChunkID = CurrentChunkID;
+        if (CurrentChunkID != ChunkID) CurrentChunkID = ChunkID;
+        if (PreviouslyChunkID > CurrentChunkID) chunkManager.loadChunk();
+        else chunkManager.unloadLastChunk();
     }
 }

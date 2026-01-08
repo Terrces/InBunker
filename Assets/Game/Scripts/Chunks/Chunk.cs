@@ -11,26 +11,24 @@ public class Chunk : MonoBehaviour
     private chunkGenerationStates currentGenerationState;
     public ChunkStates currentChunkState = ChunkStates.Loaded;
 
-    public void Init(int _id, Location _location)
+    public void Init(int _id, Location _location, ChunkManager _manager)
     {
         id = _id;
         location = _location.LocationObject;
-
+        chunkManager = _manager;
         Instantiate(location, position:transform.position, transform.rotation,parent:transform);
     }
-
-    public void setChunkManager(ChunkManager _manager) => chunkManager = _manager;
-
+    public int GetChunkID() => id;
     void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
         if (!chunkManager) return;
+        chunkManager.setPlayerChunk(id);
         if (currentGenerationState == chunkGenerationStates.Generated) 
         {
-            chunkManager.GenerateNextChunk(false,chunkManager.getLocation(0));
+            chunkManager.Generate();
             currentGenerationState = chunkGenerationStates.NextChunkGenerated;
         }
-        chunkManager.setPlayerChunk(id, currentGenerationState);
     }
     void OnTriggerExit(Collider other)
     {

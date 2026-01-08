@@ -1,16 +1,22 @@
 using System.Collections.Generic;
+using System.Linq;
+using NUnit.Framework.Constraints;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.AI;
 
 [SelectionBase]
 public class ChunkManager : MonoBehaviour
 {
+    public enum GameBiomes {Spawn, StandartBiome}
     [SerializeField] GameObject chunk;
+    [SerializeField] List<UpdateBeforeChunkID> UpdatesBiomes;
     [SerializeField] List<Location> locations = new List<Location>();
     [SerializeField] Vector3 firstChunkPostion = new Vector3(0f,0f,0f);
+    [SerializeField] int preLoadChunks = 4;
     [SerializeField] Queue<GameObject> chunksQueue;
     [SerializeField] Properties playerProperties;
-
+    public GameBiomes CurrentBiome = GameBiomes.Spawn;
     private int lastChunkID = 0;
 
     private Vector3 lastPosition;
@@ -18,18 +24,70 @@ public class ChunkManager : MonoBehaviour
 
     public List<GameObject> chunkQueue;
 
-    void Start()
+    void Start() => PreGenerateChunks();
+    private void PreGenerateChunks()
     {
-        GenerateNextChunk(true,locations[0]);
-        
-        for (int i = 0; chunkQueue.Count <= 4; i++)
+        for(int i = 0; i <= preLoadChunks; i++) Generate();
+    }
+    public void setPlayerChunk(int _id) => playerProperties.UpdateChunkID(_id);
+    public Location getLocation(int _index) => locations[_index];
+    
+    [ContextMenu("Reset Generation")]
+    public void ResetGeneraton()
+    {
+        foreach (GameObject obj in chunkQueue)
         {
-            GenerateNextChunk(false,locations[0]);
+            Destroy(obj);
+        }
+        lastChunkID = 0;
+        lastPosition = Vector3.zero;
+        lastRotation = Vector3.zero;
+        chunkQueue.Clear();
+
+        PreGenerateChunks();
+    }
+
+    private void firstChunkGenerate(int Value)
+    {
+        if(lastChunkID != 0) return;
+
+        for (int i = 0; i <= locations.Count; i++)
+        {
+            if(UpdatesBiomes[Value].Biome == GameBiomes.Spawn) UpdatesBiomes[Value].Enable = false;
+            if (locations[i].Biome == GameBiomes.Spawn)
+            {
+                GenerateNextChunk(true, locations[i]);
+                return;
+            }
+            if(i == locations.Count-1)
+            {
+                GenerateNextChunk(true, locations[0]);
+                return;
+            }
         }
     }
 
-    public void setPlayerChunk(int _id, Chunk.chunkGenerationStates _generationState) => playerProperties.UpdateChunkID(_id, _generationState);
-    public Location getLocation(int _index) => locations[_index];
+    public void Generate()
+    {
+        for (int i = 0; i < UpdatesBiomes.Count; i++)
+        {
+            if (UpdatesBiomes[i].Enable)
+            {
+                if(lastChunkID == 0) firstChunkGenerate(i);
+                else
+                {
+                    for (int j = 0; j < locations.Count; j++)
+                    {
+                        if(UpdatesBiomes[i].Biome == locations[j].Biome)
+                        {
+                            if(locations[j].SpawnEveryXChunk != 0 && locations[j].SpawnEveryXChunk % lastChunkID != 0) return;
+                            GenerateNextChunk(false,locations[j]);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     public void GenerateNextChunk(bool firstChunk = false, Location _location = null)
     {
@@ -38,8 +96,14 @@ public class ChunkManager : MonoBehaviour
         quaternion rotation;
         Vector3 position = Vector3.zero;
 
-        if (_location.EnableRotating && !firstChunk) rotation = addChunkRotation(_location.TurnRadian);
+        if (_location.EnableRotating) rotation = addChunkRotation(_location.TurnRadian);
         else  rotation = quaternion.Euler(Vector3.zero);
+        if(_location.TurnRadianNextChunk != Vector3.zero)
+        {
+            lastRotation.x += _location.TurnRadianNextChunk.x;
+            lastRotation.y += _location.TurnRadianNextChunk.y;
+            lastRotation.z += _location.TurnRadianNextChunk.z;
+        }
 
         if (firstChunk)
         {
@@ -54,24 +118,32 @@ public class ChunkManager : MonoBehaviour
         
         GameObject _chunk = Instantiate(chunk,position,rotation,parent:transform);
         Chunk chunkComponent = _chunk.GetComponent<Chunk>();
-        chunkComponent.Init(chunkID, _location);
+        chunkComponent.Init(chunkID, _location, this);
         chunkQueue.Add(_chunk);
-        
-        chunkComponent.setChunkManager(this);
-
-        unloadLastChunk();
     }
 
-    public void loadChunk() => SetChunkActive(true);
-
-    private void unloadLastChunk() => SetChunkActive(false, 6);
-
-    private void SetChunkActive(bool active, int id = 3, int minPlayerId = 5)
+    public void loadChunk()
     {
-        if(chunkQueue.Count >= 5 && minPlayerId < playerProperties.CurrentChunkID )
+        List<GameObject> _chunkQueue = chunkQueue.AsEnumerable().Reverse().ToList();
+        foreach (GameObject chunk in _chunkQueue)
+        {
+            if (!chunk.activeInHierarchy)
+            {
+                chunk.SetActive(true);
+                return;
+            } 
+        }
+    }
+
+    public void unloadLastChunk() => SetChunkActive(false, 5);
+
+
+    private void SetChunkActive(bool active, int id = 3)
+    {
+        int minPlayerId = id-1;
+        if(chunkQueue.Count >= preLoadChunks && minPlayerId < playerProperties.CurrentChunkID )
         {
             int ID = playerProperties.CurrentChunkID - id;
-            Debug.Log(chunkQueue[ID].activeInHierarchy);
             if(chunkQueue[ID].activeInHierarchy != active)
             {
                 chunkQueue[ID].SetActive(active);

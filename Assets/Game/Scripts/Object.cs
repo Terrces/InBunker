@@ -64,6 +64,6 @@ public class Object : MonoBehaviour, Iinteractable, IdropableObject
         rigidBody.AddForce(vec * (force-rigidBody.mass),ForceMode.Impulse);
 
         if (interaction != null) interaction.dropObject();
-        if (Properties != null) transform.SetParent(Properties.chunkManager.chunkQueue[Properties.CurrentChunkID].transform);
+        if (Properties != null) transform.SetParent(Properties.chunkManager.chunkQueue[Properties.CurrentChunkID-1].transform);
     }
 }
