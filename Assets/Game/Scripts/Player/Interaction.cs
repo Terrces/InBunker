@@ -33,12 +33,10 @@ public class Interaction : MonoBehaviour
     }
     private void TryInteract()
     {
-        Ray ray = new Ray(player.cameraTransform.position, player.cameraTransform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, properties.GetInteractDistance(),interactionLayerMask))
-        {
-            if (hit.collider.TryGetComponent(out Iinteractable interactable)) interactable.Interact(this, GetArm(), properties.GetPickedUpMoveObjectSpeed(), properties.GetInteractDistance(), mask, properties);
-            if (hit.collider.TryGetComponent(out Object _object)) carriedObject = _object;
-            if (hit.collider.TryGetComponent(out Iusable usable)) carriedObjectUsableComponent = usable;
-        }
+        InteractWithObject interactWith = new InteractWithObject();
+        RaycastHit raycastHit = interactWith.GetRaycastHit(player.cameraTransform, properties, interactionLayerMask);
+        if (raycastHit.collider.TryGetComponent(out Iinteractable interactable)) interactable.Interact(this, GetArm(), properties.GetPickedUpMoveObjectSpeed(), properties.GetInteractDistance(), mask, properties);
+        if (raycastHit.collider.TryGetComponent(out Object _object)) carriedObject = _object;
+        if (raycastHit.collider.TryGetComponent(out Iusable usable)) carriedObjectUsableComponent = usable;
     }
 }
