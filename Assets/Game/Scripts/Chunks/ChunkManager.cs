@@ -81,7 +81,7 @@ public class ChunkManager : MonoBehaviour
                     {
                         if(UpdatesBiomes[i].Biome == locations[j].Biome)
                         {
-                            if(locations[j].SpawnEveryXChunk != 0 && locations[j].SpawnEveryXChunk % lastQueueChunkID != 0) return;
+                            if(locations[j].SpawnEveryXChunk != 0 && lastQueueChunkID % locations[j].SpawnEveryXChunk != 0) return;
                             GenerateChunk(false,locations[j]);
                         }
                     }
@@ -125,8 +125,7 @@ public class ChunkManager : MonoBehaviour
 
     private void loadChunk()
     {
-        List<GameObject> _chunkQueue = chunkQueue.AsEnumerable().Reverse().ToList();
-        foreach (GameObject chunk in _chunkQueue)
+        foreach (GameObject chunk in chunkQueue.AsEnumerable().Reverse().ToList())
         {
             if (!chunk.activeInHierarchy)
             {

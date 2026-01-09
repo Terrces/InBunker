@@ -12,6 +12,10 @@ public class Object : MonoBehaviour, Iinteractable, IdropableObject
     private Rigidbody rigidBody => GetComponent<Rigidbody>();
     private float maxDistance;
 
+    void Start()
+    {
+        if (!gameObject.TryGetComponent(out Rigidbody rigidbody)) gameObject.AddComponent<Rigidbody>();
+    }
     void FixedUpdate()
     {
         if (Point)

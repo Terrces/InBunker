@@ -5,6 +5,7 @@ public class DestroyableObject : MonoBehaviour
 {
     private Storage storage;
     // [SerializeField] private float maxForceSpeed = 5.5f;
+    [SerializeField] private bool CollisionDamage;
     [SerializeField] private float durability = 2;
     private Rigidbody rigidBody => GetComponent<Rigidbody>();
     // private Object carriedObject;
@@ -18,29 +19,39 @@ public class DestroyableObject : MonoBehaviour
         // if (TryGetComponent(out Object _object)) carriedObject = _object;
         if (storage != null) item = storage.GetItem();
     }
+    
+    void OnCollisionEnter(Collision collision) => collisionDamage(collision);
 
-    // void OnCollisionEnter(Collision collision)
-    // {
-    //     collision.collider.TryGetComponent(out Rigidbody _rigidBody);
-    //     if (_rigidBody != null) return;
+    private void collisionDamage(Collision collision)
+    {
+        collision.collider.TryGetComponent(out Rigidbody _rigidBody);
+        
+        if (!CollisionDamage) return;
+        if (_rigidBody != null) return;
 
-    //     if (collision.relativeVelocity.sqrMagnitude >= rigidBody.mass*rigidBody.mass)
-    //     {
-    //         impact = rigidBody.mass;
-    //         Break();
-    //     }
-    // }
+        if (collision.relativeVelocity.sqrMagnitude >= rigidBody.mass*rigidBody.mass)
+        {
+            impact = rigidBody.mass;
+            GetDamage(impact);
+        }
+    }
+
+    public void GetDamage(float _impact = 1)
+    {
+        impact = _impact;
+        damage();
+        @break();
+        impact = _impact;
+    }
 
     private bool damage()
     {
         durability -= impact;
-        impact = 0f;
-        Debug.Log(durability);
-
+        impact = 0;
         return durability > 0;
     }
 
-    public void Break()
+    private void @break()
     {
         if (isQuitting) return;
         if (damage() == true) return;

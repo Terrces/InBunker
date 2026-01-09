@@ -11,7 +11,6 @@ public class Interaction : MonoBehaviour
     public Iusable carriedObjectUsableComponent = null;
     public Transform GetArm() => Point;
 
-
     public void CheckAction(float force)
     {
         if (carriedObject == null) TryInteract();
@@ -30,7 +29,7 @@ public class Interaction : MonoBehaviour
 
     public void UseItem(Transform PointTransform)
     {
-        if (carriedObjectUsableComponent != null) carriedObjectUsableComponent.Use(PointTransform);
+        if (carriedObjectUsableComponent != null) carriedObjectUsableComponent.Use(PointTransform,properties);
     }
     private void TryInteract()
     {
