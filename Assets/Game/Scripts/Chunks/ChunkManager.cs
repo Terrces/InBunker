@@ -99,12 +99,7 @@ public class ChunkManager : MonoBehaviour
 
         if (_location.EnableRotating) rotation = addChunkRotation(_location.TurnRadian);
         else  rotation = quaternion.Euler(Vector3.zero);
-        if(_location.TurnRadianNextChunk != Vector3.zero)
-        {
-            lastChunkRotation.x += _location.TurnRadianNextChunk.x;
-            lastChunkRotation.y += _location.TurnRadianNextChunk.y;
-            lastChunkRotation.z += _location.TurnRadianNextChunk.z;
-        }
+        if(_location.TurnRadianNextChunk != Vector3.zero) addChunkRotation(_location.TurnRadianNextChunk);
 
         if (firstChunk)
         {
@@ -123,17 +118,19 @@ public class ChunkManager : MonoBehaviour
         chunkQueue.Add(_chunk);
     }
 
-    private void loadChunk()
+    private void ChunkActiveSet(bool _active, List<GameObject> chunks)
     {
-        foreach (GameObject chunk in chunkQueue.AsEnumerable().Reverse().ToList())
+        foreach (GameObject chunk in chunks)
         {
-            if (!chunk.activeInHierarchy)
+            if (chunk.activeInHierarchy != _active)
             {
-                chunk.SetActive(true);
+                chunk.SetActive(_active);
                 return;
             } 
         }
     }
+
+    private void loadChunk() => ChunkActiveSet(true, chunkQueue.AsEnumerable().Reverse().ToList());
 
     private void unloadLastChunk()
     {
@@ -141,6 +138,7 @@ public class ChunkManager : MonoBehaviour
         int minPlayerId = id-1;
         if(chunkQueue.Count >= preLoadChunks && minPlayerId < PlayerCurrentChunkID )
         {
+            // ChunkActiveSet(false, chunkQueue);
             int ID = PlayerCurrentChunkID - id;
             chunkQueue[ID].SetActive(false);
         }

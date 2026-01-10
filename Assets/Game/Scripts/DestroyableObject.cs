@@ -1,9 +1,8 @@
-using System;
 using UnityEngine;
 
 public class DestroyableObject : MonoBehaviour
 {
-    private Storage storage;
+    public Storage storage;
     // [SerializeField] private float maxForceSpeed = 5.5f;
     [SerializeField] private bool CollisionDamage;
     [SerializeField] private float durability = 2;
@@ -17,7 +16,7 @@ public class DestroyableObject : MonoBehaviour
     {
         if (TryGetComponent(out Storage _storage)) storage = _storage;
         // if (TryGetComponent(out Object _object)) carriedObject = _object;
-        if (storage != null) item = storage.GetItem();
+        // if (storage != null) item = storage.GetItem();
     }
     
     void OnCollisionEnter(Collision collision) => collisionDamage(collision);
@@ -60,7 +59,7 @@ public class DestroyableObject : MonoBehaviour
 
         // if I'm wanna comeback to this logic
         // if (carriedObject != null && carriedObject.Point != null) carriedObject.Drop();
-        
+        if (storage != null) item = storage.GetItem();
         if (item != null)
         {
             GameObject _gameObject = Instantiate(item,transform.position,transform.rotation,transform.parent);

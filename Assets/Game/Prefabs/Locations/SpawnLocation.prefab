@@ -47,6 +47,7 @@ MonoBehaviour:
   gameObjects:
   - chance: 30
     _gameObject: {fileID: 1550662678292756372, guid: d96e103ea9a4b56438309396c605ece7, type: 3}
+    storage: []
     DefaultMass: 1
     RandomMass: 0
     DefaultScale: 0
@@ -263,6 +264,7 @@ MonoBehaviour:
   gameObjects:
   - chance: 100
     _gameObject: {fileID: 1550662678292756372, guid: d96e103ea9a4b56438309396c605ece7, type: 3}
+    storage: []
     DefaultMass: 1
     RandomMass: 0
     DefaultScale: 0
@@ -321,6 +323,7 @@ MonoBehaviour:
   gameObjects:
   - chance: 90
     _gameObject: {fileID: 1550662678292756372, guid: d96e103ea9a4b56438309396c605ece7, type: 3}
+    storage: []
     DefaultMass: 1
     RandomMass: 0
     DefaultScale: 1
@@ -379,6 +382,13 @@ MonoBehaviour:
   gameObjects:
   - chance: 55
     _gameObject: {fileID: 1550662678292756372, guid: d96e103ea9a4b56438309396c605ece7, type: 3}
+    storage:
+    - chance: 60
+      gameObject: {fileID: 3732955020775623512, guid: 7deae38067819e54ab64f15f311245cb, type: 3}
+    - chance: 80
+      gameObject: {fileID: 7469191585865662272, guid: e922177e441cf5543b541e2c5acb7f2c, type: 3}
+    - chance: 100
+      gameObject: {fileID: 4540133327512988796, guid: 32421229c8c05cb4eb8b899bd8e7a814, type: 3}
     DefaultMass: 1
     RandomMass: 0
     DefaultScale: 0
@@ -437,6 +447,7 @@ MonoBehaviour:
   gameObjects:
   - chance: 70
     _gameObject: {fileID: 1550662678292756372, guid: d96e103ea9a4b56438309396c605ece7, type: 3}
+    storage: []
     DefaultMass: 1
     RandomMass: 0
     DefaultScale: 1
@@ -495,6 +506,7 @@ MonoBehaviour:
   gameObjects:
   - chance: 100
     _gameObject: {fileID: 1550662678292756372, guid: d96e103ea9a4b56438309396c605ece7, type: 3}
+    storage: []
     DefaultMass: 1
     RandomMass: 0
     DefaultScale: 1
@@ -553,6 +565,7 @@ MonoBehaviour:
   gameObjects:
   - chance: 90
     _gameObject: {fileID: 1550662678292756372, guid: d96e103ea9a4b56438309396c605ece7, type: 3}
+    storage: []
     DefaultMass: 1
     RandomMass: 0
     DefaultScale: 1
@@ -909,6 +922,13 @@ MonoBehaviour:
   gameObjects:
   - chance: 70
     _gameObject: {fileID: 1550662678292756372, guid: d96e103ea9a4b56438309396c605ece7, type: 3}
+    storage:
+    - chance: 60
+      gameObject: {fileID: 3732955020775623512, guid: 7deae38067819e54ab64f15f311245cb, type: 3}
+    - chance: 80
+      gameObject: {fileID: 7469191585865662272, guid: e922177e441cf5543b541e2c5acb7f2c, type: 3}
+    - chance: 100
+      gameObject: {fileID: 4540133327512988796, guid: 32421229c8c05cb4eb8b899bd8e7a814, type: 3}
     DefaultMass: 1
     RandomMass: 0
     DefaultScale: 1
@@ -967,6 +987,7 @@ MonoBehaviour:
   gameObjects:
   - chance: 70
     _gameObject: {fileID: 1550662678292756372, guid: d96e103ea9a4b56438309396c605ece7, type: 3}
+    storage: []
     DefaultMass: 1
     RandomMass: 0
     DefaultScale: 1
@@ -1025,6 +1046,7 @@ MonoBehaviour:
   gameObjects:
   - chance: 90
     _gameObject: {fileID: 1550662678292756372, guid: d96e103ea9a4b56438309396c605ece7, type: 3}
+    storage: []
     DefaultMass: 1
     RandomMass: 0
     DefaultScale: 1
@@ -1195,6 +1217,7 @@ MonoBehaviour:
   gameObjects:
   - chance: 70
     _gameObject: {fileID: 1550662678292756372, guid: d96e103ea9a4b56438309396c605ece7, type: 3}
+    storage: []
     DefaultMass: 0
     RandomMass: 0
     DefaultScale: 0
@@ -1253,6 +1276,7 @@ MonoBehaviour:
   gameObjects:
   - chance: 70
     _gameObject: {fileID: 1550662678292756372, guid: d96e103ea9a4b56438309396c605ece7, type: 3}
+    storage: []
     DefaultMass: 0
     RandomMass: 0
     DefaultScale: 0
@@ -1311,6 +1335,7 @@ MonoBehaviour:
   gameObjects:
   - chance: 70
     _gameObject: {fileID: 1550662678292756372, guid: d96e103ea9a4b56438309396c605ece7, type: 3}
+    storage: []
     DefaultMass: 1
     RandomMass: 0
     DefaultScale: 1
@@ -1369,6 +1394,7 @@ MonoBehaviour:
   gameObjects:
   - chance: 55
     _gameObject: {fileID: 1550662678292756372, guid: d96e103ea9a4b56438309396c605ece7, type: 3}
+    storage: []
     DefaultMass: 1
     RandomMass: 0
     DefaultScale: 1
@@ -1427,6 +1453,7 @@ MonoBehaviour:
   gameObjects:
   - chance: 70
     _gameObject: {fileID: 1550662678292756372, guid: d96e103ea9a4b56438309396c605ece7, type: 3}
+    storage: []
     DefaultMass: 1
     RandomMass: 0
     DefaultScale: 0
@@ -1485,6 +1512,7 @@ MonoBehaviour:
   gameObjects:
   - chance: 35
     _gameObject: {fileID: 1550662678292756372, guid: d96e103ea9a4b56438309396c605ece7, type: 3}
+    storage: []
     DefaultMass: 1
     RandomMass: 0
     DefaultScale: 0
@@ -1543,6 +1571,13 @@ MonoBehaviour:
   gameObjects:
   - chance: 100
     _gameObject: {fileID: 1550662678292756372, guid: d96e103ea9a4b56438309396c605ece7, type: 3}
+    storage:
+    - chance: 60
+      gameObject: {fileID: 3732955020775623512, guid: 7deae38067819e54ab64f15f311245cb, type: 3}
+    - chance: 80
+      gameObject: {fileID: 7469191585865662272, guid: e922177e441cf5543b541e2c5acb7f2c, type: 3}
+    - chance: 100
+      gameObject: {fileID: 4540133327512988796, guid: 32421229c8c05cb4eb8b899bd8e7a814, type: 3}
     DefaultMass: 1
     RandomMass: 0
     DefaultScale: 0
@@ -1601,6 +1636,7 @@ MonoBehaviour:
   gameObjects:
   - chance: 70
     _gameObject: {fileID: 1550662678292756372, guid: d96e103ea9a4b56438309396c605ece7, type: 3}
+    storage: []
     DefaultMass: 1
     RandomMass: 0
     DefaultScale: 0
@@ -1721,6 +1757,7 @@ MonoBehaviour:
   gameObjects:
   - chance: 70
     _gameObject: {fileID: 1550662678292756372, guid: d96e103ea9a4b56438309396c605ece7, type: 3}
+    storage: []
     DefaultMass: 0
     RandomMass: 0
     DefaultScale: 0
@@ -1779,6 +1816,7 @@ MonoBehaviour:
   gameObjects:
   - chance: 60
     _gameObject: {fileID: 1550662678292756372, guid: d96e103ea9a4b56438309396c605ece7, type: 3}
+    storage: []
     DefaultMass: 1
     RandomMass: 0
     DefaultScale: 0
@@ -2294,6 +2332,10 @@ PrefabInstance:
     - target: {fileID: 6849790475362572188, guid: 8811d1c824b346649aa167c63b814a56, type: 3}
       propertyPath: m_Name
       value: ItemsInSpawn
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849790475362572188, guid: 8811d1c824b346649aa167c63b814a56, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

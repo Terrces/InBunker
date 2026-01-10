@@ -24,6 +24,8 @@ public class ChunkPoint : MonoBehaviour
         );
 
         ApplyManipulations(instance, data);
+
+        if (data.storage.Count != 0 && instance.TryGetComponent(out Storage storage)) storage.objects = new List<StorageInspector>(data.storage);
     }
 
     public float GetMaxRange()
