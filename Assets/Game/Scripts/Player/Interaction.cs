@@ -31,7 +31,21 @@ public class Interaction : MonoBehaviour
     private void TryInteract()
     {
         Collider raycastHitCollider = new InteractWithObject().GetRaycastHitCollider(player.cameraTransform, properties, interactionLayerMask);
-        if (raycastHitCollider && raycastHitCollider.TryGetComponent(out Iinteractable interactable)) interactable.Interact(this, GetArm(), properties.GetPickedUpMoveObjectSpeed(), properties.GetInteractDistance(), mask, properties);
+        if (raycastHitCollider && raycastHitCollider.TryGetComponent(out Iinteractable interactable))
+        {    
+            interactable.Interact
+            (
+                new InteractionStruct
+                {
+                    interactable = this,
+                    pointTransform = GetArm(),
+                    timeSpeed = properties.GetPickedUpMoveObjectSpeed(), 
+                    maxDistance = properties.GetInteractDistance(), 
+                    layerMask = mask, 
+                    properties = properties
+                }
+            );
+        }
         if (raycastHitCollider && raycastHitCollider.TryGetComponent(out Object _object)) carriedObject = _object;
         if (raycastHitCollider && raycastHitCollider.TryGetComponent(out Iusable usable)) carriedObjectUsableComponent = usable;
     }

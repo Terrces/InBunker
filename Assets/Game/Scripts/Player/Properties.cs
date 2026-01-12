@@ -5,9 +5,9 @@ public class Properties : MonoBehaviour
     [Header("Global")]
     public ChunkManager chunkManager;
     [Header("Stats")]
+    public bool Died = false;
     public int health = 100;
-    public float Temperature = 26f;
-    public float Hunger = 0f;
+    public int Temperature = 100;
     [Header("Interaction")]
     [SerializeField] private float maxInteractDistance = 5f;
     [SerializeField] private float PickedUpMoveObjectSpeed = 20f;

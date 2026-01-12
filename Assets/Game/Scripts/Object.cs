@@ -1,73 +1,120 @@
+using System.Collections;
 using UnityEngine;
 
 public class Object : MonoBehaviour, Iinteractable, IdropableObject
 {
-    [SerializeField] private Vector3 localOffset = new Vector3(0,-0.2f,2);
-    [SerializeField] public Vector3 rotation;
-    private float moveSpeed;
-    private LayerMask excludeLayer;
-    private Transform Point;
-    public Interaction interaction;
-    private Properties Properties;
-    private Rigidbody rigidBody => GetComponent<Rigidbody>();
-    private float maxDistance;
+    public enum InteractableObjectType { Object, Item }
 
-    void Start()
+    [Header("Hold settings")]
+    [SerializeField] private Vector3 localOffset = new Vector3(0, -0.2f, 2f);
+    [SerializeField] private Vector3 rotation;
+    [SerializeField] private float pickupDelay = 0.15f;
+
+    [Header("Type")]
+    [SerializeField] private InteractableObjectType type;
+
+    [Header("Models")]
+    [SerializeField] private MeshRenderer rigidBodyModel;
+    [SerializeField] private GameObject itemModel;
+
+    private GameObject tempItemModel;
+
+    private Transform point;
+    private Interaction interaction;
+    private Properties properties;
+
+    private float moveSpeed;
+    private float maxDistance;
+    private LayerMask excludeLayer;
+
+    private Rigidbody rb;
+
+    void Awake()
     {
-        if (!gameObject.TryGetComponent(out Rigidbody rigidbody)) gameObject.AddComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
+        if (!rb) rb = gameObject.AddComponent<Rigidbody>();
     }
+
     void FixedUpdate()
     {
-        if (Point)
-        {   
-            Vector3 target = Point.TransformPoint(localOffset);
-            Vector3 finalTarget = target - transform.position;
-            
-            if (finalTarget.sqrMagnitude > maxDistance)
-            {
-                Drop();
-                return;
-            }
+        if (!point) return;
 
-            rigidBody.rotation = Point.rotation * Quaternion.Euler(rotation);
-            rigidBody.linearVelocity = finalTarget * (Time.fixedDeltaTime * (moveSpeed * 100)/rigidBody.mass);
+        Vector3 target = point.TransformPoint(localOffset);
+        Vector3 delta = target - rb.position;
+
+        if (delta.sqrMagnitude > maxDistance * maxDistance)
+        {
+            Drop();
+            return;
         }
+
+        rb.rotation = point.rotation * Quaternion.Euler(rotation);
+        rb.linearVelocity = delta * moveSpeed;
     }
 
-    public void Interact(Interaction _interaction, Transform _point, float _moveSpeed, float _maxDistance, LayerMask _layerMask, Properties _properties)
+    public void Interact(InteractionStruct Interaction)
     {
-        Point = _point;
-        interaction = _interaction;
-        moveSpeed = _moveSpeed;
-        maxDistance = _maxDistance;
-        Properties = _properties;
-        
+        interaction = Interaction.interactable;
+        point = Interaction.pointTransform;
+        moveSpeed = Interaction.timeSpeed;
+        maxDistance = Interaction.maxDistance;
+        properties = Interaction.properties;
+        excludeLayer = Interaction.layerMask;
+
         transform.SetParent(null);
 
-        rigidBody.linearVelocity = Vector3.zero;
-        rigidBody.interpolation = RigidbodyInterpolation.Interpolate;
-        rigidBody.collisionDetectionMode = CollisionDetectionMode.Continuous;
-        rigidBody.useGravity = false;
-        excludeLayer = _layerMask;
-        rigidBody.freezeRotation = true;
-        rigidBody.excludeLayers += excludeLayer;
+        PrepareRigidbody();
+        StartCoroutine(PickupRoutine());
     }
-    
+
+    private IEnumerator PickupRoutine()
+    {
+        // небольшая пауза — ощущение «поднял»
+        yield return new WaitForSeconds(pickupDelay);
+
+        if (type == InteractableObjectType.Item)
+        {
+            tempItemModel = Instantiate(itemModel, point);
+            rigidBodyModel.enabled = false;
+        }
+    }
+
+    private void PrepareRigidbody()
+    {
+        rb.linearVelocity = Vector3.zero;
+        rb.useGravity = false;
+        rb.freezeRotation = true;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        rb.excludeLayers += excludeLayer;
+    }
+
     public void Drop(float force = 0f)
     {
-        Vector3 vec = Vector3.zero;
-        if (Point != null) 
-        {
-            vec = Point.forward;
-            Point = null;
-        }
-        rigidBody.excludeLayers -= excludeLayer;
-        
-        rigidBody.useGravity = true;
-        rigidBody.freezeRotation = false;
-        rigidBody.AddForce(vec * (force-rigidBody.mass),ForceMode.Impulse);
+        Vector3 dir = point ? point.forward : Vector3.zero;
+        point = null;
 
-        if (interaction != null) interaction.dropObject();
-        if (Properties != null) transform.SetParent(Properties.chunkManager.chunkQueue[Properties.chunkManager.GetPlayerCurrentChunkID()-1].transform);
+        rb.excludeLayers -= excludeLayer;
+        rb.useGravity = true;
+        rb.freezeRotation = false;
+
+        if (type == InteractableObjectType.Item)
+        {
+            rigidBodyModel.enabled = true;
+            if (tempItemModel) Destroy(tempItemModel);
+        }
+
+        rb.AddForce(dir * force, ForceMode.Impulse);
+
+        interaction?.dropObject();
+
+        if (properties != null)
+        {
+            transform.SetParent(
+                properties.chunkManager.chunkQueue[
+                    properties.chunkManager.GetPlayerCurrentChunkID() - 1
+                ].transform
+            );
+        }
     }
 }
