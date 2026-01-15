@@ -4,95 +4,87 @@ using UnityEngine;
 
 public class Characteristics : MonoBehaviour
 {
-    enum TypesTemperatureLogic {substract, adding}
-    private Properties propeties => GetComponent<Properties>();
-    [SerializeField] private int substractTemperature = 1;
-    [SerializeField] private float updateTemperatureSeconds = 0.1f;
-    [SerializeField] private float takingDamageSeconds = 0.6f;
-    [SerializeField] private bool IsWarming = false;
-    [SerializeField] private bool AllGood = true;
+    private Properties properties => GetComponent<Properties>();
+
+    [Header("Temperature")]
+    [SerializeField] private float temperature = 100f;   // 0–100
+    [SerializeField] private float coldPerSecond = 2f;    // холод среды
+    [SerializeField] private float minTemp = 0f;
+    [SerializeField] private float maxTemp = 100f;
+
+    [Header("Damage")]
+    [SerializeField] private float damageInterval = 0.6f;
+    [SerializeField] private int damagePerTick = 1;
+
+    [Header("UI")]
     [SerializeField] private TMP_Text healthText;
     [SerializeField] private TMP_Text temperatureText;
 
-    private bool isTakingDamage = false;
-
-    private void temperature(TypesTemperatureLogic _type)
-    {
-        switch (_type)
-        {
-            case TypesTemperatureLogic.adding:
-            propeties.Temperature += substractTemperature;
-            break;
-            case TypesTemperatureLogic.substract:
-            propeties.Temperature -= substractTemperature;
-            break;
-        }
-        temperatureText.text = $"Temperature: {propeties.Temperature}";
-    }
-
-    IEnumerator feezing()
-    {
-        while (propeties.Temperature > 0 && !IsWarming)
-        {
-            temperature(TypesTemperatureLogic.substract);
-            yield return new WaitForSeconds(updateTemperatureSeconds);
-        }
-    }
-    IEnumerator warming(int _temperature)
-    {
-        while (propeties.Temperature != 100 && _temperature != 0 && IsWarming)
-        {
-            temperature(TypesTemperatureLogic.adding);
-            yield return new WaitForSeconds(updateTemperatureSeconds);
-        }
-    }
-
-    IEnumerator takingDamage()
-    {
-        while (propeties.health > 0 && !AllGood)
-        {
-            propeties.health -= 1;
-            healthText.text = $"Health: {propeties.health}";
-            healthText.text = $"YOU DIED!!!";
-            isTakingDamage = true;
-            yield return new WaitForSeconds(takingDamageSeconds);
-        }
-    }
-
-    IEnumerator CheckingState()
-    {
-        while (propeties.health > 0)
-        {
-            
-            if(propeties.Temperature <= 0 && !isTakingDamage)
-            {
-                StartCoroutine(takingDamage());
-                
-                AllGood = false;
-            }
-            if (propeties.Temperature > 0)
-            {
-                AllGood = true;
-            }
-            yield return new WaitForSeconds(0.5f);
-        }
-    }
+    private bool isTakingDamage;
 
     void Start()
     {
-        cold();
-        StartCoroutine(CheckingState());
+        StartCoroutine(DamageFromCold());
+        UpdateUI();
     }
 
-
-
-    public void cold()
+    void Update()
     {
-        IsWarming = false;
-        StartCoroutine(feezing());
+        float heat = CalculateHeat();
+
+        temperature += (heat - coldPerSecond) * Time.deltaTime;
+        temperature = Mathf.Clamp(temperature, minTemp, maxTemp);
+
+        properties.Temperature = Mathf.RoundToInt(temperature);
+        UpdateUI();
     }
-    public void warm(int temperature)
+
+    float CalculateHeat()
     {
-        IsWarming = true;
-    } 
+        HeatSource[] sources = FindObjectsOfType<HeatSource>();
+        float total = 0f;
+
+        foreach (HeatSource s in sources)
+        {
+            float dist = Vector3.Distance(transform.position, s.transform.position);
+            if (dist > s.radius) continue;
+            if(!s.HeatEnabled) continue;
+
+            float factor = 1f - dist / s.radius;
+            total += s.heatPower * factor;
+        }
+
+        return total;
+    }
+
+    IEnumerator DamageFromCold()
+    {
+        while (properties.health > 0)
+        {
+            if (temperature <= 0f)
+            {
+                isTakingDamage = true;
+
+                properties.health -= damagePerTick;
+                UpdateUI();
+            }
+            else if (temperature > 0f)
+            {
+                isTakingDamage = false;
+            }
+
+            yield return new WaitForSeconds(damageInterval);
+        }
+
+        healthText.text = "YOU DIED!";
+    }
+
+    void UpdateUI()
+    {
+        if (temperatureText)
+            temperatureText.text = $"Temperature: {Mathf.RoundToInt(temperature)}";
+
+        if (healthText)
+            healthText.text = $"Health: {properties.health}";
+    }
 }

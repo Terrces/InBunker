@@ -154,6 +154,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: e5f897967bf67ae46b23464cdb35419c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 182bb8203696a924ea5f078e284f1a07, type: 2}
     - target: {fileID: 919132149155446097, guid: e5f897967bf67ae46b23464cdb35419c, type: 3}
       propertyPath: m_Name
       value: Trench Fighting Knife_1

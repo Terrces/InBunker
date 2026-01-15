@@ -11,8 +11,8 @@ public class ChunkSubObjectInspector
     [SerializeField] public GameObject _gameObject;
     public List<StorageInspector> storage;
     public bool DefaultMass = true;
-    public bool RandomMass = false;
     public bool DefaultScale = true;
+    public bool RandomMass = false;
     public bool RandomScale = false;
     public float MinScale = 1f;
     public float Scale = 1f;

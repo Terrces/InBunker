@@ -3009,6 +3009,7 @@ GameObject:
   - component: {fileID: 1901418167}
   - component: {fileID: 1901418170}
   - component: {fileID: 1901418168}
+  - component: {fileID: 1901418172}
   - component: {fileID: 1901418169}
   - component: {fileID: 1901418171}
   m_Layer: 6
@@ -3073,9 +3074,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cbf5e2e90b48e141b63f5a4c5c4cad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  moveSpeed: 3
-  jumpForce: 0
-  mouseSensitivity: 25
+  moveSpeed: 4
+  jumpForce: 0.5
+  mouseSensitivity: 20
   mouseSmoothTime: 0.05
   gamepadMode: 0
   gamepadSensitivity: 250
@@ -3100,6 +3101,7 @@ MonoBehaviour:
   interactionLayerMask:
     serializedVersion: 2
     m_Bits: 119
+  carriedObject: {fileID: 0}
   rigidbodyComponent: {fileID: 0}
 --- !u!114 &1901418170
 MonoBehaviour:
@@ -3132,13 +3134,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d59c5385371c4428a7ed801b1abaeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Characteristics
-  substractTemperature: 1
-  updateTemperatureSeconds: 0.7
-  takingDamageSeconds: 0.5
-  IsWarming: 0
-  AllGood: 1
+  temperature: 100
+  coldPerSecond: 2.5
+  minTemp: 0
+  maxTemp: 100
+  damageInterval: 0.6
+  damagePerTick: 1
   healthText: {fileID: 927814539}
   temperatureText: {fileID: 1495919251}
+--- !u!114 &1901418172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901418165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89e8a5d5cc2c7a844a8609d4e5879c46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Inventory
 --- !u!1 &2027504404
 GameObject:
   m_ObjectHideFlags: 0

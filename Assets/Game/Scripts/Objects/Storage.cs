@@ -21,7 +21,7 @@ public class Storage : MonoBehaviour
 
         foreach(StorageInspector storage in objects)
         {
-            if(type == returnType.oneCount && value <= 100) return storage.getObject();
+            if(type == returnType.oneCount && value <= storage.getChance()) return storage.getObject();
             else if(type == returnType.moreCount && (value <= (currentValue += storage.getChance()))) return storage.getObject();
         }
 
@@ -40,6 +40,7 @@ public class Storage : MonoBehaviour
         {
             return returnObject(Random.Range(0,100),returnType.oneCount);
         }
+
         return null;
     }
 }

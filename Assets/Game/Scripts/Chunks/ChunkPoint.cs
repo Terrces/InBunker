@@ -10,8 +10,15 @@ public class ChunkPoint : MonoBehaviour
 
     void Start()
     {
-        ChunkSubObjectInspector data =
-            ReturnObjectData(Random.Range(0f, GetMaxRange()), chunkPointsReturnType.moreCount);
+        ChunkSubObjectInspector data;
+        if(gameObjects.Count == 1)
+        {
+            data = ReturnObjectData(Random.Range(0f, 100f), chunkPointsReturnType.moreCount);
+        }
+        else
+        {
+            data = ReturnObjectData(Random.Range(0f, GetMaxRange()), chunkPointsReturnType.moreCount);
+        }
 
         if (data == null || data._gameObject == null)
             return;

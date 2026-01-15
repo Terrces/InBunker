@@ -6,11 +6,12 @@ public class Interaction : MonoBehaviour
     [SerializeField] private LayerMask interactionLayerMask;
     private Player player => GetComponent<Player>();
     private Properties properties => GetComponent<Properties>();
+    private Inventory inventory => GetComponent<Inventory>();
 
-    private InteractiveObject carriedObject = null;
+    // private
+    public InteractiveObject carriedObject = null;
     public Iusable carriedObjectUsableComponent = null;
     public Rigidbody rigidbodyComponent = null;
-    // private 
 
     void FixedUpdate()
     {
@@ -21,7 +22,7 @@ public class Interaction : MonoBehaviour
 
         if (delta.sqrMagnitude > properties.GetInteractDistance() * properties.GetInteractDistance())
         {
-            dropObject();
+            DropObject();
             return;
         }
 
@@ -29,21 +30,56 @@ public class Interaction : MonoBehaviour
         rigidbodyComponent.linearVelocity = delta * properties.GetPickedUpMoveObjectSpeed();
     }
 
+    public Transform GetPoint() => Point;
+
     public void CheckAction(float force)
     {
         if (carriedObject == null) TryInteract();
-        else dropObject(force);
+        else DropObject(force);
     }
 
-    private void dropObject(float force = 0f)
+    public void GetItem(InteractiveObject _object)
+    {
+        carriedObject = _object;
+        rigidbodyComponent = carriedObject.GetComponent<Rigidbody>();
+        SetActive();
+    }
+
+    public void SetActive()
+    {
+        carriedObject.setCarried(true);
+        carriedObject.ItemLogic(Point,this);
+        if (carriedObject.TryGetComponent(out Iusable usable)) carriedObjectUsableComponent = usable;
+
+        rigidbodyComponent.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        rigidbodyComponent.interpolation = RigidbodyInterpolation.Interpolate;
+        rigidbodyComponent.linearVelocity = Vector3.zero;
+        rigidbodyComponent.freezeRotation = true;
+        rigidbodyComponent.isKinematic = false;
+        rigidbodyComponent.useGravity = false;
+        if(rigidbodyComponent.excludeLayers != mask) rigidbodyComponent.excludeLayers += mask;
+        carriedObject.transform.SetParent(null);
+    }
+    public void Store() => carriedObject.setStored(true);
+
+    public void SetInactive()
+    {
+        if(!carriedObject) return; 
+        carriedObject.setCarried(false);
+        carriedObject.ItemLogic();
+        carriedObject.setStored(false);
+        if (rigidbodyComponent.excludeLayers == mask) rigidbodyComponent.excludeLayers -= mask;
+        rigidbodyComponent.useGravity = true;
+        rigidbodyComponent.freezeRotation = false;
+        rigidbodyComponent.isKinematic = false;
+        carriedObjectUsableComponent = null;
+    }
+
+    public void DropObject(float force = 0f)
     {
         Vector3 dir = Point ? Point.forward : Vector3.zero;
 
-        rigidbodyComponent.excludeLayers -= mask;
-        rigidbodyComponent.useGravity = true;
-        rigidbodyComponent.freezeRotation = false;
-        carriedObject.setCarried(false);
-        carriedObject.ItemLogic();
+        SetInactive();
 
         rigidbodyComponent.AddForce(dir * force, ForceMode.Impulse);
 
@@ -55,7 +91,8 @@ public class Interaction : MonoBehaviour
                 ].transform
             );
         }
-
+        carriedObject.setStored(false);
+        inventory.RemoveItem(carriedObject.gameObject);
         carriedObject = null;
         carriedObjectUsableComponent = null;
     }
@@ -64,22 +101,10 @@ public class Interaction : MonoBehaviour
     private void TryInteract()
     {
         Collider raycastHitCollider = new InteractWithObject().GetRaycastHitCollider(player.cameraTransform, properties, interactionLayerMask);
-        if (raycastHitCollider && raycastHitCollider.TryGetComponent(out Iinteractable interactable)) interactable.Interact();
         if (raycastHitCollider && raycastHitCollider.TryGetComponent(out InteractiveObject _object))
         {
-            carriedObject = _object;
-            rigidbodyComponent = carriedObject.GetComponent<Rigidbody>();
-
-            carriedObject.setCarried(true);
-            carriedObject.ItemLogic(Point);
-            
-            rigidbodyComponent.linearVelocity = Vector3.zero;
-            rigidbodyComponent.useGravity = false;
-            rigidbodyComponent.freezeRotation = true;
-            rigidbodyComponent.interpolation = RigidbodyInterpolation.Interpolate;
-            rigidbodyComponent.collisionDetectionMode = CollisionDetectionMode.Continuous;
-            rigidbodyComponent.excludeLayers += mask;
+            GetItem(_object);
+            inventory.AddItem(_object.gameObject);
         }
-        if (raycastHitCollider && raycastHitCollider.TryGetComponent(out Iusable usable)) carriedObjectUsableComponent = usable;
     }
 }
