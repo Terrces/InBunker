@@ -6,6 +6,6 @@ public class FlashLight : MonoBehaviour, Iusable
     
     public void Use(Transform point = null, Properties properties = null)
     {
-        _light.gameObject.SetActive(!_light.gameObject.activeInHierarchy);
+        _light.enabled = !_light.enabled;
     }
 }

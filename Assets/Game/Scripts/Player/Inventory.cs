@@ -3,7 +3,9 @@ using UnityEngine.InputSystem;
 
 public class Inventory : MonoBehaviour
 {
-    GameObject[] items = new GameObject[2];
+    public GameObject[] startItems = new GameObject[9];
+    [SerializeField] bool InEnvironment = true;
+    GameObject[] items = new GameObject[9];
     Interaction interaction => GetComponent<Interaction>();
 
     InputAction previous => InputSystem.actions.FindAction("Previous");
@@ -12,16 +14,35 @@ public class Inventory : MonoBehaviour
     private int previousIndex = 1;
     private int currentIndex = 0;
 
+    void Start()
+    {
+        if(startItems.Length == 0) return;
+        for (int i = 0; i < startItems.Length; i++)
+        {
+            GameObject item = null;
+            if(startItems[i] == null) continue;
+
+            if (InEnvironment) item = startItems[i];
+            else item = Instantiate(
+                startItems[i], 
+                interaction.GetPoint().position, 
+                interaction.GetPoint().rotation, 
+                null);
+
+            interaction.GetItem(item.GetComponent<InteractiveObject>());
+            AddItem(item);
+            choiseItem(i);
+        }
+    }
+
     void Update()
     {
         if (previous.WasPressedThisFrame())
         {
-            changeIndex(0);
             choiseItem(0);
         }
         else if (next.WasPressedThisFrame())
         {
-            changeIndex(1);
             choiseItem(1);
         }
     }
@@ -34,6 +55,7 @@ public class Inventory : MonoBehaviour
 
     void choiseItem(int Current)
     {
+        changeIndex(Current);
         if(Current == previousIndex) return;
         if(interaction.carriedObject) interaction.SetInactive();
 

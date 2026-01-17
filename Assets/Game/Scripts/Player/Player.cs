@@ -27,8 +27,6 @@ public class Player : MonoBehaviour
     private Properties properties => GetComponent<Properties>();
     private Vector3 velocity;
     private float xRotation = 0f;
-    private float xRotationVelocity;
-    private float yRotationVelocity;
     
     private InputAction moveAction => InputSystem.actions.FindAction("Move");
     private InputAction jumpAction => InputSystem.actions.FindAction("Jump");
@@ -117,14 +115,12 @@ public class Player : MonoBehaviour
         float mouseX = look.x * mouseSensitivity * Time.deltaTime;
         float mouseY = look.y * mouseSensitivity * Time.deltaTime;
 
-        float targetXRotation = xRotation - mouseY;
-        targetXRotation = Mathf.Clamp(targetXRotation, -90f, 90f);
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        float smoothYDelta = Mathf.SmoothDamp(0f, mouseX, ref yRotationVelocity, mouseSmoothTime );
-        xRotation = Mathf.SmoothDamp(xRotation, targetXRotation, ref xRotationVelocity, mouseSmoothTime);
-
-        transform.Rotate(Vector3.up * smoothYDelta);
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+
+        transform.Rotate(Vector3.up * mouseX);
     }
 
     private void HandleGamepadCamera(Vector2 look)
@@ -137,8 +133,9 @@ public class Player : MonoBehaviour
         xRotation -= stickY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        transform.Rotate(Vector3.up * stickX);
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        
+        transform.Rotate(Vector3.up * stickX);
     }
     
     #endregion

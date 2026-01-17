@@ -78,7 +78,7 @@ public class Interaction : MonoBehaviour
     public void DropObject(float force = 0f)
     {
         Vector3 dir = Point ? Point.forward : Vector3.zero;
-
+        inventory.RemoveItem(carriedObject.gameObject);
         SetInactive();
 
         rigidbodyComponent.AddForce(dir * force, ForceMode.Impulse);
@@ -91,8 +91,8 @@ public class Interaction : MonoBehaviour
                 ].transform
             );
         }
+        
         carriedObject.setStored(false);
-        inventory.RemoveItem(carriedObject.gameObject);
         carriedObject = null;
         carriedObjectUsableComponent = null;
     }

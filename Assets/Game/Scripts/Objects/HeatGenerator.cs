@@ -1,8 +1,10 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class HeatGenerator : Socket
 {
+    [SerializeField] List<LightLogic> LightSource;
     [SerializeField] bool GeneratorEnabled = true;
     [SerializeField] HeatSource heat;
     [SerializeField] int FuelLoss = 5;
@@ -10,6 +12,15 @@ public class HeatGenerator : Socket
     void Start()
     {
         StartCoroutine(CheckFuel());
+    }
+
+    private void toggleLightSource(bool _active = false)
+    {
+        if(LightSource.Count == 0) return;
+        foreach (LightLogic light in LightSource)
+        {
+            light.SetActive(_active);
+        }
     }
 
     IEnumerator CheckFuel()
@@ -25,6 +36,7 @@ public class HeatGenerator : Socket
             {
                 GeneratorEnabled = false;
                 heat.HeatEnabled = false;
+                toggleLightSource(false);
             }
 
             yield return new WaitForSeconds(1);
@@ -38,7 +50,6 @@ public class HeatGenerator : Socket
         if(Fuel + component.Fuel < 100) Fuel += component.Fuel;
         GetSocket(collider);
 
-
         Debug.Log(component.Fuel);
         
         component.Fuel -= 100 - Fuel;
@@ -49,6 +60,7 @@ public class HeatGenerator : Socket
         {
             GeneratorEnabled = true;
             heat.HeatEnabled = true;
+            toggleLightSource(true);
         }
 
         StopCoroutine(CheckFuel());
